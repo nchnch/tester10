@@ -23,80 +23,44 @@ namespace библиотека
         {
             
             int.TryParse(string.Join("", path.Where(c => char.IsDigit(c))), out таймфрейм);// парсим тайм фрейм
-            int count = 10;// количество частей на которые делим файл 
             string textFromFile = String.Empty; // строка для получения данных их файла 
-            var s = File.ReadAllText(path);
-            var step = s.Length / count;
-            string[] array = new string[count];
+            var quotss = File.ReadAllLines(path);// читаем все строки в массив
             int y=0;
-            string начало_строки = string.Empty;
-            for (int j = 0; j < count; j++) // все части файла помещаем в массив
+            for (int i = 0; i < quotss.Length; i++)
             {
-                if (j != count - 1)
-                    array[j] = s.Substring(j * step, step);
-                else
-                    array[j] = s.Substring(j * step);
-
-                textFromFile = array[j];
-            
-                // дальше создаем котировки из кадой части
-
-                string[] quotss = textFromFile.Split(new char[] { '\n', '\n' });// создаем массив из строк
-               // string начало_строки=string.Empty;
-
-                
-
-                for (int i = 0; i < quotss.Length; i++)
+                Quotes q = new Quotes();
+                try
                 {
 
-                    Quotes q = new Quotes();
-                    try
+                    string[] temp = quotss[i].Split(new char[] { ',' });// создаем массив их элементов разделенных запятой
+                    string data = temp[0] + "  " + temp[1];
+                    q.time = DateTime.Parse(data);
+                    temp[2] = temp[2].Replace(".", ",");
+                    temp[3] = temp[3].Replace(".", ",");
+                    temp[4] = temp[4].Replace(".", ",");
+                    temp[5] = temp[5].Replace(".", ",");
+                    q.open = float.Parse(temp[2]);
+                    q.maximum = float.Parse(temp[3]);
+                    q.minimum = float.Parse(temp[4]);
+                    q.close = float.Parse(temp[5]);
+                    string[] temp4 = temp[6].Split(new char[] { '\r' });
+                    q.volume = int.Parse(temp4[0]);
+
+                    Q.Add(q);
+
+                    if (y == 510514)
                     {
-
-                        string[] temp = quotss[i].Split(new char[] { ',' });// создаем массив их элементов разделенных запятой
-                        string data = temp[0] + "  " + temp[1];
-                        q.time = DateTime.Parse(data);
-                        temp[2] = temp[2].Replace(".", ",");
-                        temp[3] = temp[3].Replace(".", ",");
-                        temp[4] = temp[4].Replace(".", ",");
-                        temp[5] = temp[5].Replace(".", ",");
-                        q.open = float.Parse(temp[2]);
-                        q.maximum = float.Parse(temp[3]);
-                        q.minimum = float.Parse(temp[4]);
-                        q.close = float.Parse(temp[5]);
-                        string[] temp4 = temp[6].Split(new char[] { '\r' });
-                        q.volume = int.Parse(temp4[0]);
-
-                        Q.Add(q);
-
-                        if (y == 510514)
-                        {
-                            int r = 0;
-                        }
-                        y++;
+                        int r = 0;
                     }
-                    catch
-                    {
-                        if (начало_строки == string.Empty)
-                        {
-                            начало_строки = quotss[i];
-                        }
-                            
-                        else
-                        {
-                            
-                            string нормальная_строка= начало_строки + quotss[i];
-                            quotss[i] = нормальная_строка;
-                            начало_строки = string.Empty;
-                            i--;
-                        }
-                            
-
-                        continue;
-                    }
-
+                    y++;
                 }
+                catch
+                {
+                    continue;
+                }
+
             }
+            
             
 
             latest_time = Q.ElementAt(Q.Count() - 1).time;
