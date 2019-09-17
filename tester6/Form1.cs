@@ -89,6 +89,11 @@ namespace tester6
         public библиотека.рисунок рисунок_1;
         ToolTip tt;
         int масштаб;
+        // для пеермотки мышкой
+        bool мышь_вниз;
+        Point j_точка1;
+        Point j_точка2;
+        int j_стартовое_смещение;
 
 
         public Form1()
@@ -138,18 +143,16 @@ namespace tester6
 
         private void button4_Click(object sender, EventArgs e) // перемотка вперед
         {
-            перемотка_вперед();
+            сбор_данных();
+            int смещение = Convert.ToInt32(котировки_1.смещение(старт) + сдвиг * количество_баров);
+            перемотка_вперед(смещение);
         }
 
         private void button3_Click(object sender, EventArgs e) // перемотка назад
         {
             сбор_данных();
             int смещение = Convert.ToInt32(котировки_1.смещение(старт) - сдвиг * количество_баров);
-            if (смещение < 0) return;
-            dateTimePicker1.Value = котировки_1.Q[смещение].time;
-            рисунок_1.отрисовка(количество_баров, смещение, ref котировки_1.Q, цвет_котировок, периоды, цвет_фона,
-                цвет_разделителей_периодов);
-            pictureBox1.Image = рисунок_1.картинка;
+            перемотка_назад(смещение);
         }
 
         private void button5_Click(object sender, EventArgs e)// цвет фона
@@ -180,6 +183,24 @@ namespace tester6
 
         // функции #################################################################################
 
+        void перемотка_назад(int смещение)
+        {
+            if (смещение < 0) return;
+            dateTimePicker1.Value = котировки_1.Q[смещение].time;
+            рисунок_1.отрисовка(количество_баров, смещение, ref котировки_1.Q, цвет_котировок, периоды, цвет_фона,
+            цвет_разделителей_периодов);
+            pictureBox1.Image = рисунок_1.картинка;
+
+        }
+
+        void перемотка_вперед(int смещение)
+        {
+            if (смещение >= котировки_1.Q.Count) return;
+            dateTimePicker1.Value = котировки_1.Q[смещение].time;
+            рисунок_1.отрисовка(количество_баров, смещение, ref котировки_1.Q, цвет_котировок, периоды, цвет_фона,
+            цвет_разделителей_периодов);
+            pictureBox1.Image = рисунок_1.картинка;
+        }
         private void рисуем()
         {
             сбор_данных();
@@ -207,17 +228,21 @@ namespace tester6
             количество_баров = Convert.ToInt32(textBox1.Text);
         }
 
-        void перемотка_вперед()
+        void перемотка_мышкой(Point j_точка_1,Point j_точка_2)
         {
-            сбор_данных();
-            int смещение = Convert.ToInt32(котировки_1.смещение(старт));
-            смещение = Convert.ToInt32(смещение + сдвиг * количество_баров);
-            if (смещение >= котировки_1.Q.Count) return;
-            dateTimePicker1.Value = котировки_1.Q[смещение].time;
-            рисунок_1.отрисовка(количество_баров, смещение, ref котировки_1.Q, цвет_котировок, периоды, цвет_фона,
-                цвет_разделителей_периодов);
-            pictureBox1.Image = рисунок_1.картинка;
+            if (j_точка_1.X>j_точка_2.X)// переметка в лево
+            {
+
+            }
+
+            if (j_точка_1.X < j_точка_2.X)// переметка в право
+            {
+
+            }
         }
+
+
+
 
         // выбор через формы и комбобоксы #########################################################
         
@@ -326,5 +351,29 @@ namespace tester6
             int a = котировки_1.смещение(g);
             DateTime time = котировки_1.Q.ElementAt(a).time; 
         }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            мышь_вниз = true;
+           j_точка1.X = Form1.MousePosition.X;
+           j_точка1.Y = Form1.MousePosition.Y;
+        }
+
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (мышь_вниз)
+            {
+               j_точка2.X = Form1.MousePosition.X;
+               j_точка2.Y = Form1.MousePosition.Y;
+                перемотка_мышкой(j_точка1,j_точка2);
+            }
+            else
+                мышь_вниз = false;
+        }
     }
+}
+public struct Point
+{
+    public int X;
+    public int Y;
 }
