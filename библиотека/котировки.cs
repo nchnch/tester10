@@ -29,39 +29,26 @@ namespace библиотека
             for (int i = 0; i < quotss.Length; i++)
             {
                 Quotes q = new Quotes();
-                try
+                string[] temp = quotss[i].Split(new char[] { ',' });// создаем массив их элементов разделенных запятой
+                string data = temp[0] + "  " + temp[1];
+                q.time = DateTime.Parse(data);
+                temp[2] = temp[2].Replace(".", ",");
+                temp[3] = temp[3].Replace(".", ",");
+                temp[4] = temp[4].Replace(".", ",");
+                temp[5] = temp[5].Replace(".", ",");
+                q.open = float.Parse(temp[2]);
+                q.maximum = float.Parse(temp[3]);
+                q.minimum = float.Parse(temp[4]);
+                q.close = float.Parse(temp[5]);
+                string[] temp4 = temp[6].Split(new char[] { '\r' });
+                q.volume = int.Parse(temp4[0]);
+                Q.Add(q);
+                if (y == 1000000)
                 {
-
-                    string[] temp = quotss[i].Split(new char[] { ',' });// создаем массив их элементов разделенных запятой
-                    string data = temp[0] + "  " + temp[1];
-                    q.time = DateTime.Parse(data);
-                    temp[2] = temp[2].Replace(".", ",");
-                    temp[3] = temp[3].Replace(".", ",");
-                    temp[4] = temp[4].Replace(".", ",");
-                    temp[5] = temp[5].Replace(".", ",");
-                    q.open = float.Parse(temp[2]);
-                    q.maximum = float.Parse(temp[3]);
-                    q.minimum = float.Parse(temp[4]);
-                    q.close = float.Parse(temp[5]);
-                    string[] temp4 = temp[6].Split(new char[] { '\r' });
-                    q.volume = int.Parse(temp4[0]);
-
-                    Q.Add(q);
-
-                    if (y == 510514)
-                    {
-                        int r = 0;
-                    }
-                    y++;
+                    y = 0;
                 }
-                catch
-                {
-                    continue;
-                }
-
-            }
-            
-            
+                y++;              
+            }           
 
             latest_time = Q.ElementAt(Q.Count() - 1).time;
             earliest_time = Q.ElementAt(0).time;
