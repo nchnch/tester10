@@ -53,6 +53,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.button9 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -71,6 +72,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.button9);
             this.tabPage1.Controls.Add(this.button8);
             this.tabPage1.Controls.Add(this.button7);
             this.tabPage1.Controls.Add(this.button6);
@@ -281,7 +283,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(11, 237);
+            this.pictureBox1.Location = new System.Drawing.Point(17, 236);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(4075, 1665);
             this.pictureBox1.TabIndex = 1;
@@ -296,6 +298,15 @@
             this.toolTip1.AutoPopDelay = 50000;
             this.toolTip1.InitialDelay = 500;
             this.toolTip1.ReshowDelay = 50;
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(2601, 12);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(256, 55);
+            this.button9.TabIndex = 19;
+            this.button9.Text = "Выделение";
+            this.button9.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -341,6 +352,7 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button9;
     }
 }
 

@@ -191,25 +191,24 @@ namespace tester6
 
         // функции #################################################################################
 
-
-
         void перемотка_вперед(int смещение)
         {
             j_стартовое_смещение = Convert.ToInt32(j_стартовое_смещение + j_количество_баров * сдвиг);
             f_рисуем();
         }
 
- 
-
-
         void перемотка_мышкой(Point j_точка_1,Point j_точка_2)
         {
-                  double temp =(j_точка_1.X - j_точка2.X) / рисунок_1.Ширина_бара();
-                  int смещение = Convert.ToInt32(temp);
-                  j_стартовое_смещение = j_стартовое_смещение + смещение;
-                  f_рисуем();         
+            double temp =(j_точка_1.X - j_точка2.X) / рисунок_1.Ширина_бара();
+            if (temp < 1)
+            if (temp>-1)
+            if( double.IsInfinity(temp))
+            if (double.IsInfinity(-temp))
+                            return;
+            int смещение = Convert.ToInt32(temp);
+            j_стартовое_смещение = j_стартовое_смещение + смещение;
+            f_рисуем();         
         }
-
 
         // выбор через формы и комбобоксы #########################################################
         
@@ -287,7 +286,7 @@ namespace tester6
             f_рисуем();
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void button8_Click(object sender, EventArgs e)// тест смещения по дате 
         {
             DateTime g = DateTime.Parse("02.02.2005 17:00");
             int a = котировки_1.смещение(g);
