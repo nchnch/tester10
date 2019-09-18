@@ -121,6 +121,8 @@ namespace библиотека
         public int смещение (DateTime time)
         {
             int N = разница_в_минутах(earliest_time, time)/таймфрейм;
+            if (N > T.Count - 1)
+                return Q.Count - 1;
             int temp = T.ElementAt(N).смещение;
             return temp;
         }  
