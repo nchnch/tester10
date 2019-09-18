@@ -204,18 +204,10 @@ namespace tester6
 
         void перемотка_мышкой(Point j_точка_1,Point j_точка_2)
         {
-           // перемотка_назад(10);
-            // if (j_точка_1.X>j_точка_2.X)// переметка в лево
-            ////  {
-            //      double temp =(j_точка_1.X - j_точка2.X) / рисунок_1.Ширина_бара();
-            //      int смещение = Convert.ToInt32(temp);
-            //      перемотка_назад(смещение);
-            //  }
-
-            if (j_точка_1.X < j_точка_2.X)// переметка в право
-            {
-
-            }
+                  double temp =(j_точка_1.X - j_точка2.X) / рисунок_1.Ширина_бара();
+                  int смещение = Convert.ToInt32(temp);
+                  j_стартовое_смещение = j_стартовое_смещение + смещение;
+                  f_рисуем();         
         }
 
 
@@ -285,9 +277,7 @@ namespace tester6
         private void pictureBox1_MouseLeave(object sender, EventArgs e) // уход мышки с поля картинки
         {
             tt.Active = false;
-        }
-
-       
+        }      
 
         private void textBox1_Leave(object sender, EventArgs e)
         {
@@ -370,7 +360,7 @@ namespace tester6
 
 
     }
-    // новые функции
+   
   
 }
 public struct Point
