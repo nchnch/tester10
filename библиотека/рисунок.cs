@@ -45,6 +45,10 @@ namespace библиотека
         int отступ_баров_от_края;
 
         // переменные для подсказки
+        public double Ширина_бара()
+        {
+            return ширина_бара;
+        }
 
 
         public string time_tool_tip (int координата_Х, ref List<Quotes> котировки)
