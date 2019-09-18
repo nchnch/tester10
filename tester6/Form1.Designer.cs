@@ -206,6 +206,7 @@
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(246, 39);
             this.comboBox2.TabIndex = 8;
+            this.comboBox2.Text = "сутки";
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // label3
