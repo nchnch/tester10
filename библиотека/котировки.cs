@@ -17,8 +17,13 @@ namespace библиотека
         public Time[] time_massiv = new Time[1];// создаем массив ссылок на quites где одной минуте соответсвует одно данное.
         public List<Quotes> Q = new List<Quotes>() { };// объявили список
         public List<Time> T = new List<Time>() { };// объявили список
-        public int таймфрейм;// потом подавать в функцию его
+        int таймфрейм;// потом подавать в функцию его
         
+        public int time_frame()
+        {
+            return таймфрейм;
+        }
+
         public bool загрузка_котировок(string path)
         {
             

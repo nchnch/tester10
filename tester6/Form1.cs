@@ -76,8 +76,6 @@ namespace tester6
 {
     public partial class Form1 : Form
     {
-
-
         DateTime старт;
         Color цвет_котировок;
         int периоды;
@@ -97,16 +95,12 @@ namespace tester6
         int j_стартовое_смещение;//
         int j_базовое_количество_баров;// для масштаба стартового
         double j_шаг_масштаба;
-        
-
+        int таймфрейм;    
         // для выделения
         bool b_режим_выделения;
         библиотека.Point p_точка_старт;
         библиотека.Point p_точка_финиш;
-
         bool показывать_выходные;
-
-
 
         public Form1()
         {
@@ -130,8 +124,6 @@ namespace tester6
                 b_режим_выделения = false;
                 checkBox2.Checked = true;
                 показывать_выходные = true;
-
-
             }
             colorDialog1.FullOpen = true;
         }
@@ -144,17 +136,9 @@ namespace tester6
             string файл = openFileDialog1.SafeFileName;
             string путь = openFileDialog1.FileName;
             bool успешная_загрузка = котировки_1.загрузка_котировок(путь);
-
-          //  if (успешная_загрузка)
-         //   {
-          //      MessageBox.Show("котировки загружены");
-         //   }
-          //  else
-         //   {
-          //      MessageBox.Show("котировки не удалось загрузить");
-         //   }
             j_стартовое_смещение = 0;
             j_количество_баров = 300;
+            таймфрейм = котировки_1.time_frame();
             f_рисуем();
         }
 
@@ -258,7 +242,8 @@ namespace tester6
                 цвет_фона,
                 цвет_разделителей_периодов,
                 показывать_выходные,
-                цвет_выходных
+                цвет_выходных,
+                таймфрейм
             );
 
             pictureBox1.Image = рисунок_1.картинка;
@@ -273,12 +258,12 @@ namespace tester6
         void перемотка_мышкой(библиотека.Point j_точка_1,библиотека.Point j_точка_2)
         {
             double temp = (j_точка_1.X - j_точка2.X) / рисунок_1.Ширина_бара();
-            if (temp < 1)
-                if (temp > -1)
-                    if (double.IsInfinity(temp))
-                        if (double.IsInfinity(-temp))
-                            return;
-            int смещение = Convert.ToInt32(temp);
+            if (temp < 1) return;
+            if (temp > -1) return;
+            if (double.IsInfinity(temp)) return;
+            if (double.IsInfinity(-temp)) return;
+            if (temp == double.NaN) return;
+                int смещение = Convert.ToInt32(temp);
             j_стартовое_смещение = j_стартовое_смещение + смещение;
             f_рисуем();
         }
@@ -442,6 +427,11 @@ namespace tester6
         {
             показывать_выходные = checkBox2.Checked;
             f_рисуем();
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }
