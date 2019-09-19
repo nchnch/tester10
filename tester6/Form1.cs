@@ -69,13 +69,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 
 namespace tester6
 {
-    public partial class Form1 : Form 
+    public partial class Form1 : Form
     {
-       
+
 
         DateTime старт;
         DateTime финиш;
@@ -86,21 +87,26 @@ namespace tester6
         Color цвет_разделителей_периодов;
         double сдвиг;
         public библиотека.котировки котировки_1 = new библиотека.котировки();
-        public библиотека.рисунок рисунок_1 ;
+        public библиотека.рисунок рисунок_1;
         ToolTip tt;
         int j_масштаб;
         // для пеермотки мышкой
         bool мышь_вниз;
-        Point j_точка1;
-        Point j_точка2;
+        библиотека.Point j_точка1;
+        библиотека.Point j_точка2;
         int j_стартовое_смещение;//
         int j_базовое_количество_баров;// для масштаба стартового
         double j_шаг_масштаба;
+        // для выделения
+
+        bool b_режим_выделения;
+        библиотека.Point p_точка_старт;
+        библиотека.Point p_точка_финиш;
 
 
 
         public Form1()
-        {          
+        {
             InitializeComponent();
             {
                 tt = new ToolTip(components);
@@ -108,16 +114,17 @@ namespace tester6
                 dateTimePicker1.CustomFormat = "dd.MM.yyyy HH:mm";
                 dateTimePicker2.Format = DateTimePickerFormat.Custom;
                 dateTimePicker2.CustomFormat = "dd.MM.yyyy HH:mm";
-                цвет_котировок = Color.FromArgb(255, 122, 244, 0); 
+                цвет_котировок = Color.FromArgb(255, 122, 244, 0);
                 цвет_фона = Color.Black;
                 цвет_разделителей_периодов = Color.FromArgb(255, 55, 55, 55);
                 периоды = 1440;
                 сдвиг = 0.2;
                 j_шаг_масштаба = 2;
                 j_базовое_количество_баров = 300;
-                рисунок_1 = new библиотека.рисунок(pictureBox1.Width,pictureBox1.Height,цвет_котировок);
+                рисунок_1 = new библиотека.рисунок(pictureBox1.Width, pictureBox1.Height, цвет_котировок);
                 j_масштаб = 10;
-                
+                b_режим_выделения = false;
+
 
             }
             colorDialog1.FullOpen = true;
@@ -129,7 +136,7 @@ namespace tester6
             openFileDialog1.InitialDirectory = @"C:\Users\Владислав\Dropbox\С#\history\EURUSD\EURUSD240";
             openFileDialog1.ShowDialog();
             string файл = openFileDialog1.SafeFileName;
-            string путь = openFileDialog1.FileName ;
+            string путь = openFileDialog1.FileName;
             bool успешная_загрузка = котировки_1.загрузка_котировок(путь);
             if (успешная_загрузка)
             {
@@ -138,7 +145,7 @@ namespace tester6
             else
             {
                 MessageBox.Show("котировки не удалось загрузить");
-            }           
+            }
             j_стартовое_смещение = 0;
             j_количество_баров = 300;
             f_рисуем();
@@ -189,6 +196,11 @@ namespace tester6
             f_рисуем();
         }
 
+        private void button9_Click(object sender, EventArgs e) // активирует режим выделения участка баров
+        {
+            b_режим_выделения = true;
+        }
+
         // функции #################################################################################
 
         void перемотка_вперед(int смещение)
@@ -197,21 +209,21 @@ namespace tester6
             f_рисуем();
         }
 
-        void перемотка_мышкой(Point j_точка_1,Point j_точка_2)
+        void перемотка_мышкой(библиотека.Point j_точка_1,библиотека.Point j_точка_2)
         {
-            double temp =(j_точка_1.X - j_точка2.X) / рисунок_1.Ширина_бара();
+            double temp = (j_точка_1.X - j_точка2.X) / рисунок_1.Ширина_бара();
             if (temp < 1)
-            if (temp>-1)
-            if( double.IsInfinity(temp))
-            if (double.IsInfinity(-temp))
+                if (temp > -1)
+                    if (double.IsInfinity(temp))
+                        if (double.IsInfinity(-temp))
                             return;
             int смещение = Convert.ToInt32(temp);
             j_стартовое_смещение = j_стартовое_смещение + смещение;
-            f_рисуем();         
+            f_рисуем();
         }
 
         // выбор через формы и комбобоксы #########################################################
-        
+
         public void dateTimePicker1_ValueChanged(object sender, EventArgs e)// время старт
         {
             старт = dateTimePicker1.Value;
@@ -223,7 +235,7 @@ namespace tester6
         {
             DateTime финиш = dateTimePicker2.Value;
 
-            int  смещение_финиш= котировки_1.смещение(финиш);           
+            int смещение_финиш = котировки_1.смещение(финиш);
             j_количество_баров = смещение_финиш - j_стартовое_смещение;
             f_рисуем();
 
@@ -236,7 +248,7 @@ namespace tester6
 
         public void trackBar1_Scroll(object sender, EventArgs e)// масштаб
         {
-            j_масштаб   = trackBar1.Value-10;
+            j_масштаб = trackBar1.Value - 10;
             double temp = Math.Pow(j_шаг_масштаба, j_масштаб);
             int j_новое_количество_баров = Convert.ToInt32(j_базовое_количество_баров * temp);
             j_стартовое_смещение = j_стартовое_смещение - (j_новое_количество_баров - j_количество_баров) / 2;
@@ -262,7 +274,7 @@ namespace tester6
                 open + " open" + "\n" +
                 maximum + " максимум" + "\n" +
                 minimum + " минимум" + "\n" +
-                close + " close" + "\n"+
+                close + " close" + "\n" +
                 смещение + " смещение";
 
 
@@ -276,7 +288,7 @@ namespace tester6
         private void pictureBox1_MouseLeave(object sender, EventArgs e) // уход мышки с поля картинки
         {
             tt.Active = false;
-        }      
+        }
 
         private void textBox1_Leave(object sender, EventArgs e)
         {
@@ -290,23 +302,23 @@ namespace tester6
         {
             DateTime g = DateTime.Parse("02.02.2005 17:00");
             int a = котировки_1.смещение(g);
-            DateTime time = котировки_1.Q.ElementAt(a).time; 
+            DateTime time = котировки_1.Q.ElementAt(a).time;
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             мышь_вниз = true;
-           j_точка1.X = Form1.MousePosition.X;
-           j_точка1.Y = Form1.MousePosition.Y;
+            j_точка1.X = Form1.MousePosition.X;
+            j_точка1.Y = Form1.MousePosition.Y;
         }
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             if (мышь_вниз)
             {
-               j_точка2.X = Form1.MousePosition.X;
-               j_точка2.Y = Form1.MousePosition.Y;
-                перемотка_мышкой(j_точка1,j_точка2);
+                j_точка2.X = Form1.MousePosition.X;
+                j_точка2.Y = Form1.MousePosition.Y;
+                перемотка_мышкой(j_точка1, j_точка2);
             }
             else
                 мышь_вниз = false;
@@ -320,14 +332,14 @@ namespace tester6
             if (периоды_string == "сутки") { периоды = 1440; }
 
             // контроль коррекности 
-            if (j_количество_баров==0)
+            if (j_количество_баров == 0)
             {
                 j_количество_баров = 1;
             }
 
-            if (j_количество_баров>= котировки_1.Q.Count)
+            if (j_количество_баров >= котировки_1.Q.Count)
             {
-                j_количество_баров = котировки_1.Q.Count-1;
+                j_количество_баров = котировки_1.Q.Count - 1;
             }
 
             if (j_стартовое_смещение < 0)
@@ -335,7 +347,7 @@ namespace tester6
                 j_стартовое_смещение = 0;
             }
 
-            if (j_стартовое_смещение+j_количество_баров> котировки_1.Q.Count-1)
+            if (j_стартовое_смещение + j_количество_баров > котировки_1.Q.Count - 1)
             {
                 j_стартовое_смещение = котировки_1.Q.Count - 1 - j_количество_баров;
             }
@@ -348,22 +360,55 @@ namespace tester6
             // корреция идет на основе двух переменных смещения и количества свечей
             textBox1.Text = Convert.ToString(j_количество_баров);
             dateTimePicker1.Value = котировки_1.Q.ElementAt(j_стартовое_смещение).time;
-            dateTimePicker2.Value = котировки_1.Q.ElementAt(j_стартовое_смещение+j_количество_баров).time;
+            dateTimePicker2.Value = котировки_1.Q.ElementAt(j_стартовое_смещение + j_количество_баров).time;
             double temp = Convert.ToDouble(j_количество_баров) / j_базовое_количество_баров;
-            double temp2 = Math.Log10(temp) / Math.Log10(j_шаг_масштаба);
-            trackBar1.Value = Convert.ToInt32(temp2)+10;
+            double temp2 = Math.Log10(temp);
+            double temp3 = Math.Log10(j_шаг_масштаба);
+            trackBar1.Value = Convert.ToInt32(temp2/temp3) + 10;
             рисунок_1.отрисовка(j_количество_баров, j_стартовое_смещение, ref котировки_1.Q, цвет_котировок, периоды, цвет_фона,
                 цвет_разделителей_периодов);
             pictureBox1.Image = рисунок_1.картинка;
         }
 
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (b_режим_выделения == false)
+                return;
+            if (Form1.MouseButtons == MouseButtons.Left)
+            {              
+                if (p_точка_старт.активна == false)
+                {
+                    p_точка_старт.активна = true;
+                    p_точка_старт.X = Cursor.Position.X;
+                    p_точка_старт.Y = Cursor.Position.Y - 92;
+                    return;
+                }
+
+                p_точка_финиш.активна = true;
+                p_точка_финиш.X = Cursor.Position.X;
+                p_точка_финиш.Y = Cursor.Position.Y - 92;
+
+                рисунок_1.f_рисование_прямоугольника(p_точка_старт, p_точка_старт);               
+                pictureBox1.Image = рисунок_1.картинка;
+            }
+
+            if (p_точка_старт.активна)
+            if (Form1.MouseButtons != MouseButtons.Left)
+                {
+                j_стартовое_смещение = рисунок_1.смещение_по_координате(p_точка_старт.X);
+                int temp = рисунок_1.смещение_по_координате(p_точка_финиш.X) - j_стартовое_смещение;
+                j_количество_баров = temp;
+                f_рисуем();
+                b_режим_выделения = false;
+                // сделать изменения в параметрах рисования котировок
+                // вызвать перерисовку котировок
+
+
+            }
+        }
+
 
     }
-   
-  
 }
-public struct Point
-{
-    public int X;
-    public int Y;
-}
+
+    

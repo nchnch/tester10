@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 
 
@@ -31,19 +32,28 @@ namespace библиотека
 {
     public class рисунок
     {
+        // параметры окна
         int высота_окна;
         int ширина_окна;
+
+        // рисовательные 
         public Bitmap картинка;
         Graphics рисовалка;
-        
         double ширина_бара;
-        int смещение_первого_бара;
         Font шрифт;
         Brush кисть_текстовая;
-        котировки котировки_1;
         int отступ_баров_от_края;
+        Pen p_кисть_для_выделения;
 
-        // переменные для подсказки
+        // котировки
+        котировки котировки_1;
+        int смещение_первого_бара;
+
+        
+        
+
+        
+
         public double Ширина_бара()
         {
             if (ширина_бара==0)
@@ -173,7 +183,19 @@ namespace библиотека
 
         }
 
+        public void f_рисование_прямоугольника(Point p_старт,Point p_финиш)
+        {
+            рисовалка.DrawLine(p_кисть_для_выделения, p_старт.X, p_старт.Y, p_старт.X, p_финиш.Y);
+            рисовалка.DrawLine(p_кисть_для_выделения, p_финиш.X, p_старт.Y, p_финиш.X, p_финиш.Y);
+            рисовалка.DrawLine(p_кисть_для_выделения, p_старт.X, p_финиш.Y, p_финиш.X, p_финиш.Y);
+            рисовалка.DrawLine(p_кисть_для_выделения, p_старт.X, p_старт.Y, p_финиш.X, p_старт.Y);
+        }
 
+        public int смещение_по_координате(int координата_X)
+        {
+            int temp = Convert.ToInt32(координата_X / ширина_бара + смещение_первого_бара);
+            return temp;
+        }
 
        public рисунок( int ширина_окна_,int высота_окна_, Color цвет_котировок_)
         {
@@ -188,9 +210,20 @@ namespace библиотека
             кисть_текстовая = new SolidBrush(Color.Black);
             котировки_1 = new котировки();
             отступ_баров_от_края = 20;// по вертикали
+            p_кисть_для_выделения = new Pen(Color.SlateBlue, 0.5f);
+            p_кисть_для_выделения.DashStyle = DashStyle.Dot;
+
+
+
 
         }
     }
-
+    public struct Point
+    {
+        public int X;
+        public int Y;
+        public bool активна;
+    }
 
 }
+
