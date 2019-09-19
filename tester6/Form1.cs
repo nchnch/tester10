@@ -97,6 +97,7 @@ namespace tester6
         int j_стартовое_смещение;//
         int j_базовое_количество_баров;// для масштаба стартового
         double j_шаг_масштаба;
+        
 
         // для выделения
         bool b_режим_выделения;
@@ -117,7 +118,7 @@ namespace tester6
                 dateTimePicker2.Format = DateTimePickerFormat.Custom;
                 dateTimePicker2.CustomFormat = "dd.MM.yyyy HH:mm";
                 цвет_котировок = Color.FromArgb(255, 122, 244, 0);
-                цвет_выходных = Color.FromArgb(255, 55, 55, 55);
+                цвет_выходных = Color.FromArgb(160, 55, 55, 55); ;
                 цвет_фона = Color.Black;
                 цвет_разделителей_периодов = Color.FromArgb(255, 55, 55, 55);
                 периоды = 1440;
@@ -127,6 +128,8 @@ namespace tester6
                 рисунок_1 = new библиотека.рисунок(pictureBox1.Width, pictureBox1.Height, цвет_котировок);
                 j_масштаб = 10;
                 b_режим_выделения = false;
+                checkBox2.Checked = true;
+                показывать_выходные = true;
 
 
             }
@@ -435,9 +438,10 @@ namespace tester6
             }
         }
 
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        private void checkBox2_MouseClick(object sender, MouseEventArgs e)
         {
             показывать_выходные = checkBox2.Checked;
+            f_рисуем();
         }
     }
 }

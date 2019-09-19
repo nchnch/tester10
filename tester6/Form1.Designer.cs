@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
@@ -53,8 +55,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -99,6 +99,28 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "визуализация";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(2624, 60);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(348, 36);
+            this.checkBox2.TabIndex = 20;
+            this.checkBox2.Text = "показывать выходные";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.checkBox2_MouseClick);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(2624, 12);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(327, 36);
+            this.checkBox1.TabIndex = 19;
+            this.checkBox1.Text = "режим приближения";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // button8
             // 
@@ -202,10 +224,7 @@
             this.comboBox2.Items.AddRange(new object[] {
             "час",
             "4 часа",
-            "сутки",
-            "неделя",
-            "месяц",
-            "год"});
+            "сутки"});
             this.comboBox2.Location = new System.Drawing.Point(323, 119);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(246, 39);
@@ -301,28 +320,6 @@
             this.toolTip1.AutoPopDelay = 50000;
             this.toolTip1.InitialDelay = 500;
             this.toolTip1.ReshowDelay = 50;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(2624, 12);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(327, 36);
-            this.checkBox1.TabIndex = 19;
-            this.checkBox1.Text = "режим приближения";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(2624, 60);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(348, 36);
-            this.checkBox2.TabIndex = 20;
-            this.checkBox2.Text = "показывать выходные";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // Form1
             // 
