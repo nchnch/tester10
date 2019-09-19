@@ -53,7 +53,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.button9 = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -72,7 +73,8 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.button9);
+            this.tabPage1.Controls.Add(this.checkBox2);
+            this.tabPage1.Controls.Add(this.checkBox1);
             this.tabPage1.Controls.Add(this.button8);
             this.tabPage1.Controls.Add(this.button7);
             this.tabPage1.Controls.Add(this.button6);
@@ -100,7 +102,7 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(1907, 94);
+            this.button8.Location = new System.Drawing.Point(1888, 96);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(186, 62);
             this.button8.TabIndex = 18;
@@ -300,15 +302,27 @@
             this.toolTip1.InitialDelay = 500;
             this.toolTip1.ReshowDelay = 50;
             // 
-            // button9
+            // checkBox1
             // 
-            this.button9.Location = new System.Drawing.Point(2601, 12);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(256, 55);
-            this.button9.TabIndex = 19;
-            this.button9.Text = "Выделение";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(2624, 12);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(327, 36);
+            this.checkBox1.TabIndex = 19;
+            this.checkBox1.Text = "режим приближения";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(2624, 60);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(348, 36);
+            this.checkBox2.TabIndex = 20;
+            this.checkBox2.Text = "показывать выходные";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // Form1
             // 
@@ -354,7 +368,8 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
     }
 }
 

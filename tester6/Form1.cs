@@ -79,11 +79,11 @@ namespace tester6
 
 
         DateTime старт;
-        DateTime финиш;
         Color цвет_котировок;
         int периоды;
         int j_количество_баров;
         Color цвет_фона;
+        Color цвет_выходных;
         Color цвет_разделителей_периодов;
         double сдвиг;
         public библиотека.котировки котировки_1 = new библиотека.котировки();
@@ -97,11 +97,13 @@ namespace tester6
         int j_стартовое_смещение;//
         int j_базовое_количество_баров;// для масштаба стартового
         double j_шаг_масштаба;
-        // для выделения
 
+        // для выделения
         bool b_режим_выделения;
         библиотека.Point p_точка_старт;
         библиотека.Point p_точка_финиш;
+
+        bool показывать_выходные;
 
 
 
@@ -115,6 +117,7 @@ namespace tester6
                 dateTimePicker2.Format = DateTimePickerFormat.Custom;
                 dateTimePicker2.CustomFormat = "dd.MM.yyyy HH:mm";
                 цвет_котировок = Color.FromArgb(255, 122, 244, 0);
+                цвет_выходных = Color.FromArgb(255, 55, 55, 55);
                 цвет_фона = Color.Black;
                 цвет_разделителей_периодов = Color.FromArgb(255, 55, 55, 55);
                 периоды = 1440;
@@ -138,14 +141,15 @@ namespace tester6
             string файл = openFileDialog1.SafeFileName;
             string путь = openFileDialog1.FileName;
             bool успешная_загрузка = котировки_1.загрузка_котировок(путь);
-            if (успешная_загрузка)
-            {
-                MessageBox.Show("котировки загружены");
-            }
-            else
-            {
-                MessageBox.Show("котировки не удалось загрузить");
-            }
+
+          //  if (успешная_загрузка)
+         //   {
+          //      MessageBox.Show("котировки загружены");
+         //   }
+          //  else
+         //   {
+          //      MessageBox.Show("котировки не удалось загрузить");
+         //   }
             j_стартовое_смещение = 0;
             j_количество_баров = 300;
             f_рисуем();
@@ -196,12 +200,66 @@ namespace tester6
             f_рисуем();
         }
 
-        private void button9_Click(object sender, EventArgs e) // активирует режим выделения участка баров
-        {
-            b_режим_выделения = true;
-        }
+
 
         // функции #################################################################################
+        void f_рисуем()
+        {
+            string периоды_string = comboBox2.Text;
+            if (периоды_string == "час") { периоды = 60; }
+            if (периоды_string == "4 часа") { периоды = 240; }
+            if (периоды_string == "сутки") { периоды = 1440; }
+
+            // контроль коррекности 
+            if (j_количество_баров <= 0)
+            {
+                j_количество_баров = 1;
+            }
+
+            if (j_количество_баров >= котировки_1.Q.Count)
+            {
+                j_количество_баров = котировки_1.Q.Count - 1;
+            }
+
+            if (j_стартовое_смещение < 0)
+            {
+                j_стартовое_смещение = 0;
+            }
+
+            if (j_стартовое_смещение + j_количество_баров > котировки_1.Q.Count - 1)
+            {
+                j_стартовое_смещение = котировки_1.Q.Count - 1 - j_количество_баров;
+            }
+
+            if (j_стартовое_смещение < 0)
+            {
+                j_стартовое_смещение = 0;
+            }
+
+            // корреция идет на основе двух переменных смещения и количества свечей
+            
+            textBox1.Text = Convert.ToString(j_количество_баров);
+            dateTimePicker1.Value = котировки_1.Q.ElementAt(j_стартовое_смещение).time;
+            dateTimePicker2.Value = котировки_1.Q.ElementAt(j_стартовое_смещение + j_количество_баров).time;
+            double temp = Convert.ToDouble(j_количество_баров) / j_базовое_количество_баров;
+            double temp2 = Math.Log10(temp);
+            double temp3 = Math.Log10(j_шаг_масштаба);
+            trackBar1.Value = Convert.ToInt32(temp2 / temp3) + 10;
+            рисунок_1.отрисовка
+            (
+                j_количество_баров, 
+                j_стартовое_смещение, 
+                ref котировки_1.Q, 
+                цвет_котировок, 
+                периоды, 
+                цвет_фона,
+                цвет_разделителей_периодов,
+                показывать_выходные,
+                цвет_выходных
+            );
+
+            pictureBox1.Image = рисунок_1.картинка;
+        }
 
         void перемотка_вперед(int смещение)
         {
@@ -300,13 +358,16 @@ namespace tester6
 
         private void button8_Click(object sender, EventArgs e)// тест смещения по дате 
         {
-            DateTime g = DateTime.Parse("02.02.2005 17:00");
-            int a = котировки_1.смещение(g);
-            DateTime time = котировки_1.Q.ElementAt(a).time;
+            // DateTime g = DateTime.Parse("02.02.2005 17:00");
+            //  int a = котировки_1.смещение(g);
+            /// DateTime time = котировки_1.Q.ElementAt(a).time;
+          // test();
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
+            if (b_режим_выделения)
+                return;
             мышь_вниз = true;
             j_точка1.X = Form1.MousePosition.X;
             j_точка1.Y = Form1.MousePosition.Y;
@@ -314,6 +375,8 @@ namespace tester6
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
+            if (b_режим_выделения)
+                return;
             if (мышь_вниз)
             {
                 j_точка2.X = Form1.MousePosition.X;
@@ -324,90 +387,58 @@ namespace tester6
                 мышь_вниз = false;
         }
 
-        void f_рисуем()
+       
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            string периоды_string = comboBox2.Text;
-            if (периоды_string == "час") { периоды = 60; }
-            if (периоды_string == "4 часа") { периоды = 240; }
-            if (периоды_string == "сутки") { периоды = 1440; }
-
-            // контроль коррекности 
-            if (j_количество_баров == 0)
-            {
-                j_количество_баров = 1;
-            }
-
-            if (j_количество_баров >= котировки_1.Q.Count)
-            {
-                j_количество_баров = котировки_1.Q.Count - 1;
-            }
-
-            if (j_стартовое_смещение < 0)
-            {
-                j_стартовое_смещение = 0;
-            }
-
-            if (j_стартовое_смещение + j_количество_баров > котировки_1.Q.Count - 1)
-            {
-                j_стартовое_смещение = котировки_1.Q.Count - 1 - j_количество_баров;
-            }
-
-            if (j_стартовое_смещение < 0)
-            {
-                j_стартовое_смещение = 0;
-            }
-
-            // корреция идет на основе двух переменных смещения и количества свечей
-            textBox1.Text = Convert.ToString(j_количество_баров);
-            dateTimePicker1.Value = котировки_1.Q.ElementAt(j_стартовое_смещение).time;
-            dateTimePicker2.Value = котировки_1.Q.ElementAt(j_стартовое_смещение + j_количество_баров).time;
-            double temp = Convert.ToDouble(j_количество_баров) / j_базовое_количество_баров;
-            double temp2 = Math.Log10(temp);
-            double temp3 = Math.Log10(j_шаг_масштаба);
-            trackBar1.Value = Convert.ToInt32(temp2/temp3) + 10;
-            рисунок_1.отрисовка(j_количество_баров, j_стартовое_смещение, ref котировки_1.Q, цвет_котировок, периоды, цвет_фона,
-                цвет_разделителей_периодов);
-            pictureBox1.Image = рисунок_1.картинка;
+            if (checkBox1.Checked == true)
+                b_режим_выделения = true;
+            if (checkBox1.Checked == false)
+                b_режим_выделения = false;
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (b_режим_выделения == false)
                 return;
-            if (Form1.MouseButtons == MouseButtons.Left)
-            {              
+
+            if (Form1.MouseButtons == MouseButtons.Left)// миссия стартанула
+            {
                 if (p_точка_старт.активна == false)
                 {
-                    p_точка_старт.активна = true;
-                    p_точка_старт.X = Cursor.Position.X;
-                    p_точка_старт.Y = Cursor.Position.Y - 92;
+                    // какие то операторы
+                    p_точка_старт.активна = true;    
+                    p_точка_старт.X = Cursor.Position.X-8; 
+                    p_точка_старт.Y = Cursor.Position.Y-122;
                     return;
                 }
+                else
+                {
+                    //какие то операторы
+                    p_точка_финиш.X = Cursor.Position.X-8;                
+                    p_точка_финиш.Y = Cursor.Position.Y-122;            
+                    int err = 1;           
+                    рисунок_1.f_рисование_прямоугольника(p_точка_старт, p_точка_финиш);
+                    pictureBox1.Image = рисунок_1.картинка;
+                }  
 
-                p_точка_финиш.активна = true;
-                p_точка_финиш.X = Cursor.Position.X;
-                p_точка_финиш.Y = Cursor.Position.Y - 92;
-
-                рисунок_1.f_рисование_прямоугольника(p_точка_старт, p_точка_старт);               
-                pictureBox1.Image = рисунок_1.картинка;
             }
 
-            if (p_точка_старт.активна)
-            if (Form1.MouseButtons != MouseButtons.Left)
-                {
+            if (Form1.MouseButtons != MouseButtons.Left)// миссия завершена либо не начиналась
+            if (p_точка_старт.активна==true)
+            {
+                p_точка_старт.активна = false;        
                 j_стартовое_смещение = рисунок_1.смещение_по_координате(p_точка_старт.X);
                 int temp = рисунок_1.смещение_по_координате(p_точка_финиш.X) - j_стартовое_смещение;
                 j_количество_баров = temp;
                 f_рисуем();
-                b_режим_выделения = false;
-                // сделать изменения в параметрах рисования котировок
-                // вызвать перерисовку котировок
-
-
             }
         }
 
-
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            показывать_выходные = checkBox2.Checked;
+        }
     }
 }
 
