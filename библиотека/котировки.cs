@@ -12,6 +12,7 @@ namespace библиотека
     public class котировки
     {
        // public Quotes[] quotes = new Quotes[1];// создаем массив объектов класса равный количеству котировок
+        public List<Quotes> Q_full_time = new List<Quotes>() { };// массив без пробелов
         public DateTime latest_time;
         public DateTime earliest_time;
         public Time[] time_massiv = new Time[1];// создаем массив ссылок на quites где одной минуте соответсвует одно данное.
@@ -87,7 +88,33 @@ namespace библиотека
             return минимум;
         }
 
+        void массив_баров_без_временных_пробелов(int time_frame)
+        {
+            int max_i = Q.Count();
+            var i_котировка = new Quotes();
+            i_котировка.time = Q[0].time;
 
+            for (int i=1;i<max_i;i++)
+            {
+                i_котировка.time = i_котировка.time.AddMinutes(time_frame);
+                while (i_котировка.time<= Q[i].time)
+                {
+
+                }
+                i_котировка.time=i_котировка.time.AddMinutes(time_frame);
+                if(i_котировка.time.DayOfWeek == DayOfWeek.Saturday) 
+                if (i_котировка.time == Q[i].time) continue;
+                if (i_котировка.time < Q[i].time) { }
+                
+
+
+                // в пустой котировке увеличиваем время на тайм фрейм начиная с нулевого бара 
+                // если время совпадает со временем котировки массива идем дальше 
+                // если воемя меньше и не выходные то добавляем пустую котировку в список 
+
+                
+            }
+        }
 
         void создние_временного_массива(int step_min, DateTime старт, DateTime финиш)
         {
@@ -123,7 +150,7 @@ namespace библиотека
         }
 
 
-        public int смещение (DateTime time)
+        public int смещение2 (DateTime time)
         {
             int N = разница_в_минутах(earliest_time, time)/таймфрейм;
             if (N < 0)
@@ -137,7 +164,7 @@ namespace библиотека
 
 
 
-        public int смещение2 (DateTime time ) // метод постепенного приближения
+        public int смещение (DateTime time ) // метод постепенного приближения
         {
             bool точное_или_более_позднее=true;
             int количество_баров = Q.Count();

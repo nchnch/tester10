@@ -258,12 +258,16 @@ namespace tester6
         void перемотка_мышкой(библиотека.Point j_точка_1,библиотека.Point j_точка_2)
         {
             double temp = (j_точка_1.X - j_точка2.X) / рисунок_1.Ширина_бара();
-            if (temp < 1) return;
-            if (temp > -1) return;
-            if (double.IsInfinity(temp)) return;
-            if (double.IsInfinity(-temp)) return;
-            if (temp == double.NaN) return;
-                int смещение = Convert.ToInt32(temp);
+            if (temp < 1) 
+            if (temp > -1)
+                    return;
+            if (double.IsInfinity(temp))
+                return;
+            if (double.IsInfinity(-temp))
+                return;
+            if (temp == double.NaN)
+                return;
+            int смещение = Convert.ToInt32(temp);
             j_стартовое_смещение = j_стартовое_смещение + смещение;
             f_рисуем();
         }
@@ -432,6 +436,12 @@ namespace tester6
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+           нормализация_котировок F2 = new нормализация_котировок();
+            F2.Show();
         }
     }
 }

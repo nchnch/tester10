@@ -36,7 +36,7 @@ namespace tester6
             таймфрейм = котировки_1.time_frame();          
         }
 
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)// файл диалог
         {
 
         }

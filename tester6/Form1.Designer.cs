@@ -55,10 +55,11 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.button9 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -93,7 +94,6 @@
             this.tabPage1.Controls.Add(this.dateTimePicker1);
             this.tabPage1.Controls.Add(this.button2);
             this.tabPage1.Controls.Add(this.button1);
-            this.tabPage1.Controls.Add(this.menuStrip1);
             this.tabPage1.Location = new System.Drawing.Point(10, 48);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -292,6 +292,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button9);
             this.tabPage2.Location = new System.Drawing.Point(10, 48);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -323,15 +324,15 @@
             this.toolTip1.InitialDelay = 500;
             this.toolTip1.ReshowDelay = 50;
             // 
-            // menuStrip1
+            // button9
             // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(40, 40);
-            this.menuStrip1.Location = new System.Drawing.Point(3, 3);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(3873, 52);
-            this.menuStrip1.TabIndex = 21;
-            this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
+            this.button9.Location = new System.Drawing.Point(16, 17);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(274, 105);
+            this.button9.TabIndex = 0;
+            this.button9.Text = "Нормализация котировок";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // Form1
             // 
@@ -340,13 +341,13 @@
             this.ClientSize = new System.Drawing.Size(3052, 1059);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.tabControl1);
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -380,7 +381,7 @@
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.Button button9;
     }
 }
 
