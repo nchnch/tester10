@@ -26,6 +26,7 @@ namespace библиотека
         // котировки
         котировки котировки_1;
         int смещение_первого_бара;
+        List<Quotes> котировки;
 
         public double Ширина_бара()
         {
@@ -33,34 +34,34 @@ namespace библиотека
         }
 
 
-        public string time_tool_tip (int координата_Х, ref List<Quotes> котировки)
+        public string time_tool_tip (int координата_Х)
         {
             int i = Convert.ToInt32(Math.Floor((координата_Х / ширина_бара) + смещение_первого_бара));
             return (котировки[i].time.ToString());
 
         }
-        public string minimum_tool_tip(int координата_Х, ref List<Quotes> котировки)
+        public string minimum_tool_tip(int координата_Х)
         {
             int i = Convert.ToInt32(Math.Floor((координата_Х / ширина_бара) + смещение_первого_бара));
             return (котировки[i].minimum.ToString());
 
         }
 
-        public string maximum_tool_tip(int координата_Х, ref List<Quotes> котировки)
+        public string maximum_tool_tip(int координата_Х)
         {
             int i = Convert.ToInt32(Math.Floor((координата_Х / ширина_бара) + смещение_первого_бара));
             return (котировки[i].maximum.ToString());
 
         }
 
-        public string open_tool_tip(int координата_Х, ref List<Quotes> котировки)
+        public string open_tool_tip(int координата_Х)
         {
             int i = Convert.ToInt32(Math.Floor((координата_Х / ширина_бара) + смещение_первого_бара));
             return (котировки[i].open.ToString());
 
         }
 
-        public string close_tool_tip(int координата_Х, ref List<Quotes> котировки)
+        public string close_tool_tip(int координата_Х)
         {
             int i = Convert.ToInt32(Math.Floor((координата_Х / ширина_бара) + смещение_первого_бара));
             return (котировки[i].close.ToString());
@@ -69,7 +70,6 @@ namespace библиотека
         (
             int количество_баров,
             int смещение_первого_бара_,
-            ref List<Quotes> котировки,
             Color цвет_котировок,
             int периоды,
             Color цвет_фона, 
@@ -203,7 +203,7 @@ namespace библиотека
             return temp;
         }
 
-       public рисунок( int ширина_окна_,int высота_окна_, Color цвет_котировок_)
+       public рисунок( int ширина_окна_,int высота_окна_, Color цвет_котировок_, List<Quotes> Q_)
         {
 
             ширина_окна = ширина_окна_;
@@ -215,6 +215,8 @@ namespace библиотека
             котировки_1 = new котировки();
             отступ_баров_от_края = 20;// по вертикали
             p_кисть_для_выделения = new Pen(Color.FromArgb(255, 182, 182, 182), 5f);
+            котировки = Q_;
+
         }
     }
     public struct Point

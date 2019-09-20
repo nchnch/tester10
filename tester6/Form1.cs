@@ -120,12 +120,12 @@ namespace tester6
                 сдвиг = 0.2;
                 j_шаг_масштаба = 2;
                 j_базовое_количество_баров = 300;
-                рисунок_1 = new библиотека.рисунок(pictureBox1.Width, pictureBox1.Height, цвет_котировок);
+                
                 j_масштаб = 10;
                 b_режим_выделения = false;
                 checkBox2.Checked = true;
                 показывать_выходные = true;
-                Q = котировки_1.Q_();
+                
             }
             colorDialog1.FullOpen = true;
         }
@@ -141,6 +141,9 @@ namespace tester6
             j_стартовое_смещение = 0;
             j_количество_баров = 300;
             таймфрейм = котировки_1.time_frame();
+            Q = котировки_1.Q_();
+            рисунок_1 = new библиотека.рисунок(pictureBox1.Width, pictureBox1.Height, цвет_котировок, Q);
+
             f_рисуем();
         }
 
@@ -238,7 +241,6 @@ namespace tester6
             (
                 j_количество_баров, 
                 j_стартовое_смещение, 
-                ref Q, 
                 цвет_котировок, 
                 периоды, 
                 цвет_фона,
@@ -313,11 +315,11 @@ namespace tester6
         private void pictureBox1_DoubleClick(object sender, EventArgs e) //двойной щелчек мыши на баре подсказка
         {
             int координата_Х = Cursor.Position.X - 4; // 4 - смещение для определения более точного мышки есть расхождение между в определении форма не прилегает к краю на 4 пикселя
-            string time = рисунок_1.time_tool_tip(координата_Х, ref Q);
-            string minimum = рисунок_1.minimum_tool_tip(координата_Х, ref Q);
-            string maximum = рисунок_1.maximum_tool_tip(координата_Х, ref Q);
-            string open = рисунок_1.open_tool_tip(координата_Х, ref Q);
-            string close = рисунок_1.close_tool_tip(координата_Х, ref Q);
+            string time = рисунок_1.time_tool_tip(координата_Х);
+            string minimum = рисунок_1.minimum_tool_tip(координата_Х);
+            string maximum = рисунок_1.maximum_tool_tip(координата_Х);
+            string open = рисунок_1.open_tool_tip(координата_Х);
+            string close = рисунок_1.close_tool_tip(координата_Х);
             int смещение = котировки_1.смещение(DateTime.Parse(time));
 
 
