@@ -16,10 +16,15 @@ namespace библиотека
         public DateTime latest_time;
         public DateTime earliest_time;
         public Time[] time_massiv = new Time[1];// создаем массив ссылок на quites где одной минуте соответсвует одно данное.
-        public List<Quotes> Q = new List<Quotes>() { };// объявили список
+        List<Quotes> Q = new List<Quotes>() { };// объявили список
         public List<Time> T = new List<Time>() { };// объявили список
         int таймфрейм;// потом подавать в функцию его
         
+        public List<Quotes> Q_()
+        {
+            return(Q);
+        }
+
         public int time_frame()
         {
             return таймфрейм;
@@ -88,31 +93,34 @@ namespace библиотека
             return минимум;
         }
 
-        void массив_баров_без_временных_пробелов(int time_frame)
+        public void создание_котировок_без_временных_пробелов(int time_frame)
         {
             int max_i = Q.Count();
             var i_котировка = new Quotes();
             i_котировка.time = Q[0].time;
+            i_котировка.maximum = 0;
+            i_котировка.minimum = 10000000000;
+            Q_full_time.Add(Q[0]);
+
 
             for (int i=1;i<max_i;i++)
             {
                 i_котировка.time = i_котировка.time.AddMinutes(time_frame);
-                while (i_котировка.time<= Q[i].time)
+                
+                
+                while (i_котировка.time < Q[i].time)
                 {
+                    if (i_котировка.time.DayOfWeek!=DayOfWeek.Saturday)
+                    if (i_котировка.time.DayOfWeek != DayOfWeek.Sunday)
+                         Q_full_time.Add(i_котировка);
 
+                    i_котировка.time = i_котировка.time.AddMinutes(time_frame);
                 }
-                i_котировка.time=i_котировка.time.AddMinutes(time_frame);
-                if(i_котировка.time.DayOfWeek == DayOfWeek.Saturday) 
-                if (i_котировка.time == Q[i].time) continue;
-                if (i_котировка.time < Q[i].time) { }
-                
 
-
-                // в пустой котировке увеличиваем время на тайм фрейм начиная с нулевого бара 
-                // если время совпадает со временем котировки массива идем дальше 
-                // если воемя меньше и не выходные то добавляем пустую котировку в список 
-
-                
+                if (i_котировка.time == Q[i].time)
+                {
+                    Q_full_time.Add(Q[i]);
+                }   
             }
         }
 

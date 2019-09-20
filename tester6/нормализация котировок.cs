@@ -21,6 +21,7 @@ namespace tester6
         public нормализация_котировок()
         {
             InitializeComponent();
+
         }
 
         private void button1_Click(object sender, EventArgs e)// загрузка 1
@@ -33,7 +34,11 @@ namespace tester6
             bool успешная_загрузка = котировки_1.загрузка_котировок(путь);
             j_стартовое_смещение = 0;
             j_количество_баров = 300;
-            таймфрейм = котировки_1.time_frame();          
+            таймфрейм = котировки_1.time_frame();
+            котировки_1.создание_котировок_без_временных_пробелов(таймфрейм);
+            int t = 0;
+
+
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)// файл диалог
@@ -41,4 +46,9 @@ namespace tester6
 
         }
     }
+    class Visual:Form1
+    {
+
+    }
+
 }

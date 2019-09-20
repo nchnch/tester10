@@ -101,6 +101,7 @@ namespace tester6
         библиотека.Point p_точка_старт;
         библиотека.Point p_точка_финиш;
         bool показывать_выходные;
+        List<Quotes> Q;
 
         public Form1()
         {
@@ -124,6 +125,7 @@ namespace tester6
                 b_режим_выделения = false;
                 checkBox2.Checked = true;
                 показывать_выходные = true;
+                Q = котировки_1.Q_();
             }
             colorDialog1.FullOpen = true;
         }
@@ -135,7 +137,7 @@ namespace tester6
             openFileDialog1.ShowDialog();
             string файл = openFileDialog1.SafeFileName;
             string путь = openFileDialog1.FileName;
-            bool успешная_загрузка = котировки_1.загрузка_котировок(путь);
+            котировки_1.загрузка_котировок(путь);
             j_стартовое_смещение = 0;
             j_количество_баров = 300;
             таймфрейм = котировки_1.time_frame();
@@ -203,9 +205,9 @@ namespace tester6
                 j_количество_баров = 1;
             }
 
-            if (j_количество_баров >= котировки_1.Q.Count)
+            if (j_количество_баров >= Q.Count)
             {
-                j_количество_баров = котировки_1.Q.Count - 1;
+                j_количество_баров = Q.Count - 1;
             }
 
             if (j_стартовое_смещение < 0)
@@ -213,9 +215,9 @@ namespace tester6
                 j_стартовое_смещение = 0;
             }
 
-            if (j_стартовое_смещение + j_количество_баров > котировки_1.Q.Count - 1)
+            if (j_стартовое_смещение + j_количество_баров > Q.Count - 1)
             {
-                j_стартовое_смещение = котировки_1.Q.Count - 1 - j_количество_баров;
+                j_стартовое_смещение = Q.Count - 1 - j_количество_баров;
             }
 
             if (j_стартовое_смещение < 0)
@@ -226,8 +228,8 @@ namespace tester6
             // корреция идет на основе двух переменных смещения и количества свечей
             
             textBox1.Text = Convert.ToString(j_количество_баров);
-            dateTimePicker1.Value = котировки_1.Q.ElementAt(j_стартовое_смещение).time;
-            dateTimePicker2.Value = котировки_1.Q.ElementAt(j_стартовое_смещение + j_количество_баров).time;
+            dateTimePicker1.Value = Q.ElementAt(j_стартовое_смещение).time;
+            dateTimePicker2.Value = Q.ElementAt(j_стартовое_смещение + j_количество_баров).time;
             double temp = Convert.ToDouble(j_количество_баров) / j_базовое_количество_баров;
             double temp2 = Math.Log10(temp);
             double temp3 = Math.Log10(j_шаг_масштаба);
@@ -236,7 +238,7 @@ namespace tester6
             (
                 j_количество_баров, 
                 j_стартовое_смещение, 
-                ref котировки_1.Q, 
+                ref Q, 
                 цвет_котировок, 
                 периоды, 
                 цвет_фона,
@@ -311,11 +313,11 @@ namespace tester6
         private void pictureBox1_DoubleClick(object sender, EventArgs e) //двойной щелчек мыши на баре подсказка
         {
             int координата_Х = Cursor.Position.X - 4; // 4 - смещение для определения более точного мышки есть расхождение между в определении форма не прилегает к краю на 4 пикселя
-            string time = рисунок_1.time_tool_tip(координата_Х, ref котировки_1.Q);
-            string minimum = рисунок_1.minimum_tool_tip(координата_Х, ref котировки_1.Q);
-            string maximum = рисунок_1.maximum_tool_tip(координата_Х, ref котировки_1.Q);
-            string open = рисунок_1.open_tool_tip(координата_Х, ref котировки_1.Q);
-            string close = рисунок_1.close_tool_tip(координата_Х, ref котировки_1.Q);
+            string time = рисунок_1.time_tool_tip(координата_Х, ref Q);
+            string minimum = рисунок_1.minimum_tool_tip(координата_Х, ref Q);
+            string maximum = рисунок_1.maximum_tool_tip(координата_Х, ref Q);
+            string open = рисунок_1.open_tool_tip(координата_Х, ref Q);
+            string close = рисунок_1.close_tool_tip(координата_Х, ref Q);
             int смещение = котировки_1.смещение(DateTime.Parse(time));
 
 
