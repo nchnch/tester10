@@ -39,6 +39,7 @@ namespace tester6
             int t = 0;
 
 
+
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)// файл диалог
