@@ -90,18 +90,16 @@ namespace tester6
         int vi_масштаб;
         // для пеермотки мышкой
         bool vb_мышь_вниз;
-        библиотека.Point s_точка1;
-        библиотека.Point s_точка2;
-        int j_стартовое_смещение;//
-        int j_базовое_количество_баров;// для масштаба стартового
-        double j_шаг_масштаба;
-        int таймфрейм;    
-        // для выделения
-        bool b_режим_выделения;
+        int vi_стартовое_смещение;//
+        int vi_базовое_количество_баров;// для масштаба стартового
+        double vd_шаг_масштаба;
+        int vi_таймфрейм;    
+        // для выделения и перемотки
+        bool vb_режим_выделения;
         библиотека.Point s_точка_старт;
         библиотека.Point s_точка_финиш;
-        bool показывать_выходные;
-        List<Quotes> Q;
+        bool vb_показывать_выходные;
+        List<Quotes>l_Q;
         библиотека.расчеты_для_рисунка расчеты1 = new библиотека.расчеты_для_рисунка();
 
         public Form1()
@@ -119,13 +117,13 @@ namespace tester6
                 vc_цвет_разделителей_периодов = Color.FromArgb(255, 55, 55, 55);
                 vi_периоды = 1440;
                 vd_сдвиг = 0.2;
-                j_шаг_масштаба = 2;
-                j_базовое_количество_баров = 300;
+                vd_шаг_масштаба = 2;
+                vi_базовое_количество_баров = 300;
                 
                 vi_масштаб = 10;
-                b_режим_выделения = false;
+                vb_режим_выделения = false;
                 checkBox2.Checked = true;
-                показывать_выходные = true;
+                vb_показывать_выходные = true;
                 
             }
             colorDialog1.FullOpen = true;
@@ -142,11 +140,11 @@ namespace tester6
             string файл = openFileDialog1.SafeFileName;
             string путь = openFileDialog1.FileName;
             o_котировки_1.загрузка_котировок(путь);
-            j_стартовое_смещение = 0;
+            vi_стартовое_смещение = 0;
             vi_количество_баров = 300;
-            таймфрейм = o_котировки_1.time_frame();
-            Q = o_котировки_1.Q_();
-            o_рисунок_1 = new библиотека.рисунок(pictureBox1.Width, pictureBox1.Height, vc_цвет_котировок, Q);
+            vi_таймфрейм = o_котировки_1.time_frame();
+           l_Q = o_котировки_1.Q_();
+            o_рисунок_1 = new библиотека.рисунок(pictureBox1.Width, pictureBox1.Height, vc_цвет_котировок,l_Q);
 
             f_рисуем();
         }
@@ -159,14 +157,14 @@ namespace tester6
 
         private void button4_Click(object sender, EventArgs e) // перемотка вперед
         {
-            j_стартовое_смещение = Convert.ToInt32(j_стартовое_смещение + vi_количество_баров * vd_сдвиг);
+            vi_стартовое_смещение = Convert.ToInt32(vi_стартовое_смещение + vi_количество_баров * vd_сдвиг);
             f_рисуем();
         }
 
         private void button3_Click(object sender, EventArgs e) // перемотка назад
         {
 
-            j_стартовое_смещение = Convert.ToInt32(j_стартовое_смещение - vi_количество_баров * vd_сдвиг);
+            vi_стартовое_смещение = Convert.ToInt32(vi_стартовое_смещение - vi_количество_баров * vd_сдвиг);
             f_рисуем();
         }
 
@@ -212,46 +210,46 @@ namespace tester6
                 vi_количество_баров = 1;
             }
 
-            if (vi_количество_баров >= Q.Count)
+            if (vi_количество_баров >=l_Q.Count)
             {
-                vi_количество_баров = Q.Count - 1;
+                vi_количество_баров =l_Q.Count - 1;
             }
 
-            if (j_стартовое_смещение < 0)
+            if (vi_стартовое_смещение < 0)
             {
-                j_стартовое_смещение = 0;
+                vi_стартовое_смещение = 0;
             }
 
-            if (j_стартовое_смещение + vi_количество_баров > Q.Count - 1)
+            if (vi_стартовое_смещение + vi_количество_баров >l_Q.Count - 1)
             {
-                j_стартовое_смещение = Q.Count - 1 - vi_количество_баров;
+                vi_стартовое_смещение =l_Q.Count - 1 - vi_количество_баров;
             }
 
-            if (j_стартовое_смещение < 0)
+            if (vi_стартовое_смещение < 0)
             {
-                j_стартовое_смещение = 0;
+                vi_стартовое_смещение = 0;
             }
 
             // корреция идет на основе двух переменных смещения и количества свечей
             
             textBox1.Text = Convert.ToString(vi_количество_баров);
-            dateTimePicker1.Value = Q.ElementAt(j_стартовое_смещение).time;
-            dateTimePicker2.Value = Q.ElementAt(j_стартовое_смещение + vi_количество_баров).time;
-            double temp = Convert.ToDouble(vi_количество_баров) / j_базовое_количество_баров;
+            dateTimePicker1.Value =l_Q.ElementAt(vi_стартовое_смещение).time;
+            dateTimePicker2.Value =l_Q.ElementAt(vi_стартовое_смещение + vi_количество_баров).time;
+            double temp = Convert.ToDouble(vi_количество_баров) / vi_базовое_количество_баров;
             double temp2 = Math.Log10(temp);
-            double temp3 = Math.Log10(j_шаг_масштаба);
+            double temp3 = Math.Log10(vd_шаг_масштаба);
             trackBar1.Value = Convert.ToInt32(temp2 / temp3) + 10;
             o_рисунок_1.отрисовка
             (
                 vi_количество_баров, 
-                j_стартовое_смещение, 
+                vi_стартовое_смещение, 
                 vc_цвет_котировок, 
                 vi_периоды, 
                 vc_цвет_фона,
                 vc_цвет_разделителей_периодов,
-                показывать_выходные,
+                vb_показывать_выходные,
                 vc_цвет_выходных,
-                таймфрейм
+                vi_таймфрейм
             );
 
             pictureBox1.Image = o_рисунок_1.картинка;
@@ -261,7 +259,7 @@ namespace tester6
 
         void перемотка_мышкой(библиотека.Point j_точка_1,библиотека.Point j_точка_2)
         {
-            double temp = (j_точка_1.X - s_точка2.X) / o_рисунок_1.Ширина_бара();
+            double temp = (j_точка_1.X - s_точка_финиш.X) / o_рисунок_1.Ширина_бара();
             if (temp < 1) 
             if (temp > -1)
                     return;
@@ -272,7 +270,7 @@ namespace tester6
             if (temp == double.NaN)
                 return;
             int смещение = Convert.ToInt32(temp);
-            j_стартовое_смещение = j_стартовое_смещение + смещение;
+            vi_стартовое_смещение = vi_стартовое_смещение + смещение;
             f_рисуем();
         }
 
@@ -281,7 +279,7 @@ namespace tester6
         public void dateTimePicker1_ValueChanged(object sender, EventArgs e)// время старт
         {
             vd_старт= dateTimePicker1.Value;
-            j_стартовое_смещение = o_котировки_1.смещение(vd_старт);
+            vi_стартовое_смещение = o_котировки_1.смещение(vd_старт);
             f_рисуем();
         }
 
@@ -290,7 +288,7 @@ namespace tester6
             DateTime финиш = dateTimePicker2.Value;
 
             int смещение_финиш = o_котировки_1.смещение(финиш);
-            vi_количество_баров = смещение_финиш - j_стартовое_смещение;
+            vi_количество_баров = смещение_финиш - vi_стартовое_смещение;
             f_рисуем();
 
         }
@@ -303,9 +301,9 @@ namespace tester6
         public void trackBar1_Scroll(object sender, EventArgs e)// масштаб
         {
             vi_масштаб = trackBar1.Value - 10;
-            double temp = Math.Pow(j_шаг_масштаба, vi_масштаб);
-            int j_новое_количество_баров = Convert.ToInt32(j_базовое_количество_баров * temp);
-            j_стартовое_смещение = j_стартовое_смещение - (j_новое_количество_баров - vi_количество_баров) / 2;
+            double temp = Math.Pow(vd_шаг_масштаба, vi_масштаб);
+            int j_новое_количество_баров = Convert.ToInt32(vi_базовое_количество_баров * temp);
+            vi_стартовое_смещение = vi_стартовое_смещение - (j_новое_количество_баров - vi_количество_баров) / 2;
             vi_количество_баров = j_новое_количество_баров;
             f_рисуем();
         }
@@ -362,22 +360,22 @@ namespace tester6
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            if (b_режим_выделения)
+            if (vb_режим_выделения)
                 return;
             vb_мышь_вниз = true;
-            s_точка1.X = Form1.MousePosition.X;
-            s_точка1.Y = Form1.MousePosition.Y;
+            s_точка_старт.X = Form1.MousePosition.X;
+            s_точка_старт.Y = Form1.MousePosition.Y;
         }
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            if (b_режим_выделения)
+            if (vb_режим_выделения)
                 return;
             if (vb_мышь_вниз)
             {
-                s_точка2.X = Form1.MousePosition.X;
-                s_точка2.Y = Form1.MousePosition.Y;
-                перемотка_мышкой(s_точка1, s_точка2);
+                s_точка_финиш.X = Form1.MousePosition.X;
+                s_точка_финиш.Y = Form1.MousePosition.Y;
+                перемотка_мышкой(s_точка_старт, s_точка_финиш);
             }
             else
                 vb_мышь_вниз = false;
@@ -388,14 +386,14 @@ namespace tester6
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox1.Checked == true)
-                b_режим_выделения = true;
+                vb_режим_выделения = true;
             if (checkBox1.Checked == false)
-                b_режим_выделения = false;
+                vb_режим_выделения = false;
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (b_режим_выделения == false)
+            if (vb_режим_выделения == false)
                 return;
 
             if (Form1.MouseButtons == MouseButtons.Left)// миссия стартанула
@@ -424,8 +422,8 @@ namespace tester6
             if (s_точка_старт.активна==true)
             {
                 s_точка_старт.активна = false;        
-                j_стартовое_смещение = o_рисунок_1.смещение_по_координате(s_точка_старт.X);
-                int temp = o_рисунок_1.смещение_по_координате(s_точка_финиш.X) - j_стартовое_смещение;
+                vi_стартовое_смещение = o_рисунок_1.смещение_по_координате(s_точка_старт.X);
+                int temp = o_рисунок_1.смещение_по_координате(s_точка_финиш.X) - vi_стартовое_смещение;
                 vi_количество_баров = temp;
                 f_рисуем();
             }
@@ -433,7 +431,7 @@ namespace tester6
 
         private void checkBox2_MouseClick(object sender, MouseEventArgs e)
         {
-            показывать_выходные = checkBox2.Checked;
+            vb_показывать_выходные = checkBox2.Checked;
             f_рисуем();
         }
 
