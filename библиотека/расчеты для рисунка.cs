@@ -6,11 +6,18 @@ using System.Threading.Tasks;
 using System.Drawing.Drawing2D;
 using System.Drawing;
 
+
 namespace библиотека
 {
-    class расчеты_для_рисунка_и_формы
+    public class расчеты_для_рисунка
     {
-       
+
+        int vi_количество_баров=300;
+        int vi_стартовое_смещение = 0;
+        public void загрузка()
+        {
+
+        }
 
 
 

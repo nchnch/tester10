@@ -45,7 +45,7 @@
     <Compile Include="form handler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="котировки.cs" />
-    <Compile Include="расчеты для рисунка и формы.cs" />
+    <Compile Include="расчеты для рисунка.cs" />
     <Compile Include="рисунок.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
