@@ -90,16 +90,16 @@ namespace tester6
         int vi_масштаб;
         // для пеермотки мышкой
         bool vb_мышь_вниз;
-        библиотека.Point j_точка1;
-        библиотека.Point j_точка2;
+        библиотека.Point s_точка1;
+        библиотека.Point s_точка2;
         int j_стартовое_смещение;//
         int j_базовое_количество_баров;// для масштаба стартового
         double j_шаг_масштаба;
         int таймфрейм;    
         // для выделения
         bool b_режим_выделения;
-        библиотека.Point p_точка_старт;
-        библиотека.Point p_точка_финиш;
+        библиотека.Point s_точка_старт;
+        библиотека.Point s_точка_финиш;
         bool показывать_выходные;
         List<Quotes> Q;
         библиотека.расчеты_для_рисунка расчеты1 = new библиотека.расчеты_для_рисунка();
@@ -261,7 +261,7 @@ namespace tester6
 
         void перемотка_мышкой(библиотека.Point j_точка_1,библиотека.Point j_точка_2)
         {
-            double temp = (j_точка_1.X - j_точка2.X) / o_рисунок_1.Ширина_бара();
+            double temp = (j_точка_1.X - s_точка2.X) / o_рисунок_1.Ширина_бара();
             if (temp < 1) 
             if (temp > -1)
                     return;
@@ -365,8 +365,8 @@ namespace tester6
             if (b_режим_выделения)
                 return;
             vb_мышь_вниз = true;
-            j_точка1.X = Form1.MousePosition.X;
-            j_точка1.Y = Form1.MousePosition.Y;
+            s_точка1.X = Form1.MousePosition.X;
+            s_точка1.Y = Form1.MousePosition.Y;
         }
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
@@ -375,9 +375,9 @@ namespace tester6
                 return;
             if (vb_мышь_вниз)
             {
-                j_точка2.X = Form1.MousePosition.X;
-                j_точка2.Y = Form1.MousePosition.Y;
-                перемотка_мышкой(j_точка1, j_точка2);
+                s_точка2.X = Form1.MousePosition.X;
+                s_точка2.Y = Form1.MousePosition.Y;
+                перемотка_мышкой(s_точка1, s_точка2);
             }
             else
                 vb_мышь_вниз = false;
@@ -400,32 +400,32 @@ namespace tester6
 
             if (Form1.MouseButtons == MouseButtons.Left)// миссия стартанула
             {
-                if (p_точка_старт.активна == false)
+                if (s_точка_старт.активна == false)
                 {
                     // какие то операторы
-                    p_точка_старт.активна = true;    
-                    p_точка_старт.X = Cursor.Position.X-8; 
-                    p_точка_старт.Y = Cursor.Position.Y-122;
+                    s_точка_старт.активна = true;    
+                    s_точка_старт.X = Cursor.Position.X-8; 
+                    s_точка_старт.Y = Cursor.Position.Y-122;
                     return;
                 }
                 else
                 {
                     //какие то операторы
-                    p_точка_финиш.X = Cursor.Position.X-8;                
-                    p_точка_финиш.Y = Cursor.Position.Y-122;            
+                    s_точка_финиш.X = Cursor.Position.X-8;                
+                    s_точка_финиш.Y = Cursor.Position.Y-122;            
                     int err = 1;           
-                    o_рисунок_1.f_рисование_прямоугольника(p_точка_старт, p_точка_финиш);
+                    o_рисунок_1.f_рисование_прямоугольника(s_точка_старт, s_точка_финиш);
                     pictureBox1.Image = o_рисунок_1.картинка;
                 }  
 
             }
 
             if (Form1.MouseButtons != MouseButtons.Left)// миссия завершена либо не начиналась
-            if (p_точка_старт.активна==true)
+            if (s_точка_старт.активна==true)
             {
-                p_точка_старт.активна = false;        
-                j_стартовое_смещение = o_рисунок_1.смещение_по_координате(p_точка_старт.X);
-                int temp = o_рисунок_1.смещение_по_координате(p_точка_финиш.X) - j_стартовое_смещение;
+                s_точка_старт.активна = false;        
+                j_стартовое_смещение = o_рисунок_1.смещение_по_координате(s_точка_старт.X);
+                int temp = o_рисунок_1.смещение_по_координате(s_точка_финиш.X) - j_стартовое_смещение;
                 vi_количество_баров = temp;
                 f_рисуем();
             }
