@@ -89,9 +89,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\библиотека\библиотека.csproj">
+    <ProjectReference Include="..\b_библиотека_общая\b_библиотека_общая.csproj">
+      <Project>{dbbed236-9fa3-4538-8f8f-79f2e1f91239}</Project>
+      <Name>b_библиотека_общая</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\библиотека\b_библиотека_форм.csproj">
       <Project>{88851a8e-93c1-46db-bf15-cb4cfe9dca69}</Project>
-      <Name>библиотека</Name>
+      <Name>b_библиотека_форм</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
