@@ -84,6 +84,8 @@ namespace b_библиотека_форм
         int vi_базовое_количество_баров=300;// для масштаба стартового
         int vi_масштаб_максимум = 40;
         int vi_масштаб_минимум = 0;
+        int vi_позиция_X1;// для перемотки мышкой
+        int vi_позиция_X2;
 
 
         // цвета
@@ -100,7 +102,7 @@ namespace b_библиотека_форм
 
         Button o_кнопка_загрузка;
         OpenFileDialog o_файл_диалог;
-        PictureBox pictureBox1;
+        PictureBox o_pictureBox;
         ComboBox o_comboBox_периоды;
         TextBox o_textBox_количество_баров;
         DateTimePicker o_dateTimePicker_старт;
@@ -111,10 +113,11 @@ namespace b_библиотека_форм
         ComboBox o_comboBox_цвета;
         ColorDialog o_colorDialog;
         CheckBox o_сheckBox_приближение;
+        CheckBox o_CheckBox_показывать_выходные;
 
         // bool 
-        bool vb_режим_выделения;
-        bool vb_мышь_вниз;      
+        bool vb_режим_приближения=false;
+        bool vb_мышь_была_внизу;      
         bool vb_показывать_выходные;
 
         // объекты , структуры , списки
@@ -143,14 +146,19 @@ namespace b_библиотека_форм
            ref ComboBox o_comboBox_цвета_,
            ref ColorDialog o_colorDialog_,
            ref CheckBox o_сheckBox_приближение_,
-           ref CheckBox o_CheckBox_показывать_выходные,
+           ref CheckBox o_CheckBox_показывать_выходные_,
            ref OpenFileDialog o_файл_диалог_,
-           ref PictureBox pictureBox1_
+           ref PictureBox pictureBox_
 
         )
         {
-            o_сheckBox_приближение = o_сheckBox_приближение_;
+            o_CheckBox_показывать_выходные = o_CheckBox_показывать_выходные_;
+            vb_показывать_выходные = o_CheckBox_показывать_выходные.Checked;
+            o_CheckBox_показывать_выходные.CheckedChanged += e_CheckBox_показывать_выходные_CheckedChanged;
 
+            o_сheckBox_приближение = o_сheckBox_приближение_;
+            o_сheckBox_приближение.Checked=false;
+            o_сheckBox_приближение.CheckedChanged += e_сheckBox_приближение_CheckedChanged;
 
             o_colorDialog = o_colorDialog_;
             o_colorDialog.FullOpen = true;
@@ -193,10 +201,67 @@ namespace b_библиотека_форм
             o_файл_диалог = o_файл_диалог_;
             o_кнопка_загрузка.Click += e_кнопка_загрузка_клик;
 
-            pictureBox1 = pictureBox1_;
-            vi_ширина_рисунка = pictureBox1.Width;          
-            vi_высота_рисунка = pictureBox1.Height;
+            o_pictureBox = pictureBox_;
+            vi_ширина_рисунка = o_pictureBox.Width;          
+            vi_высота_рисунка = o_pictureBox.Height;
+            o_pictureBox.MouseDown += e_pictureBox_MouseDown;
+            o_pictureBox.MouseUp += e_pictureBox_MouseUp;
+           
+
+
         }
+
+        private void e_CheckBox_показывать_выходные_CheckedChanged(object sender, EventArgs e)
+        {
+            vb_показывать_выходные = o_CheckBox_показывать_выходные.Checked;
+            fv_рисуем();
+        }
+
+        private void e_сheckBox_приближение_CheckedChanged(object sender, EventArgs e)
+        {
+            if (o_сheckBox_приближение.Checked)
+                vb_режим_приближения = true;
+            else
+                vb_режим_приближения = false;
+        }
+
+        private void e_pictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (vb_режим_приближения)
+                return;
+            vb_мышь_была_внизу = true;
+            vi_позиция_X1 = PictureBox.MousePosition.X;
+
+        }
+
+        private void e_pictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (vb_режим_приближения)
+                return;
+            if (vb_мышь_была_внизу == false)
+                return;
+            vi_позиция_X2 = PictureBox.MousePosition.X;               
+            fv_перемотка_мышкой(vi_позиция_X1, vi_позиция_X2);
+        }
+
+        void fv_перемотка_мышкой(int vi_позиция_X1, int vi_позиция_X2)
+        {
+            double temp = (vi_позиция_X1 - vi_позиция_X2) / o_рисунок_1.Ширина_бара();
+            if (temp < 1)
+                if (temp > -1)
+                    return;
+            if (double.IsInfinity(temp))
+                return;
+            if (double.IsInfinity(-temp))
+                return;
+            if (temp == double.NaN)
+                return;
+            int смещение = Convert.ToInt32(temp);
+            vi_стартовое_смещение = vi_стартовое_смещение + смещение;
+            vb_мышь_была_внизу = false;
+            fv_рисуем();
+        }
+
 
         private void e_comboBox_цвета_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -228,7 +293,7 @@ namespace b_библиотека_форм
 
         private void e_trackBar_масштаб_Scroll(object sender, EventArgs e)
         {
-            vi_масштаб = o_trackBar_масштаб.Value - 10;
+            vi_масштаб = o_trackBar_масштаб.Value - vi_масштаб_максимум/2;
             double temp = Math.Pow(vd_шаг_масштаба, vi_масштаб);
             int j_новое_количество_баров = Convert.ToInt32(vi_базовое_количество_баров * temp);
             vi_стартовое_смещение = vi_стартовое_смещение - (j_новое_количество_баров - vi_количество_баров) / 2;
@@ -322,7 +387,7 @@ namespace b_библиотека_форм
             }
 
             // корреция идет на основе двух переменных смещения и количества свечей
-
+    
             o_textBox_количество_баров.Text = Convert.ToString(vi_количество_баров);
             o_dateTimePicker_старт.Value = l_Q.ElementAt(vi_стартовое_смещение).time;
             o_dateTimePicker_финиш.Value = l_Q.ElementAt(vi_стартовое_смещение + vi_количество_баров).time;
@@ -346,7 +411,7 @@ namespace b_библиотека_форм
                 vi_таймфрейм
             );
 
-            pictureBox1.Image = o_рисунок_1.картинка;
+            o_pictureBox.Image = o_рисунок_1.картинка;
         }
 
 
