@@ -84,8 +84,8 @@ namespace tester6
         Color vc_цвет_выходных;
         Color vc_цвет_разделителей_периодов;
         double vd_сдвиг;
-        public библиотека.котировки o_котировки_1 = new библиотека.котировки();
-        public библиотека.рисунок o_рисунок_1;
+        public b_библиотека_общая.котировки o_котировки_1 = new b_библиотека_общая.котировки();
+        public b_библиотека_форм.рисунок o_рисунок_1;
         ToolTip o_подсказка;
         int vi_масштаб;
         // для пеермотки мышкой
@@ -96,11 +96,9 @@ namespace tester6
         int vi_таймфрейм;
         // для выделения и перемотки
         bool vb_режим_выделения;
-        библиотека.Point s_точка_старт;
-        библиотека.Point s_точка_финиш;
         bool vb_показывать_выходные;
         List<Quotes> l_Q;
-        библиотека.расчеты_для_рисунка o_расчеты1 = new библиотека.расчеты_для_рисунка();
+        b_библиотека_форм.расчеты_для_рисунка o_расчеты1 = new b_библиотека_форм.расчеты_для_рисунка();
 
         public Form1()
         {
@@ -129,7 +127,6 @@ namespace tester6
                     (
                         ref button1,
                         ref openFileDialog1,
-                        ref o_котировки_1,
                         vc_цвет_котировок,
                         pictureBox1.Width,
                         pictureBox1.Height
@@ -145,23 +142,7 @@ namespace tester6
 
         // кнопки ###################################################################################
 
-        private void button1_Click(object sender, EventArgs e) // кнопка загрузить
-        {
-
-
-            openFileDialog1.InitialDirectory = @"C:\Users\Владислав\Dropbox\С#\history\EURUSD\EURUSD240";
-            openFileDialog1.ShowDialog();
-            string файл = openFileDialog1.SafeFileName;
-            string путь = openFileDialog1.FileName;
-            o_котировки_1.загрузка_котировок(путь);
-            vi_стартовое_смещение = 0;
-            vi_количество_баров = 300;
-            vi_таймфрейм = o_котировки_1.time_frame();
-            l_Q = o_котировки_1.Q_();
-            o_рисунок_1 = new библиотека.рисунок(pictureBox1.Width, pictureBox1.Height, vc_цвет_котировок, l_Q);
-
-            f_рисуем();
-        }
+        
 
         private void button2_Click(object sender, EventArgs e)// показать котировки
         {
@@ -461,6 +442,16 @@ namespace tester6
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage1_Resize(object sender, EventArgs e)
         {
 
         }

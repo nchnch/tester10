@@ -7,7 +7,7 @@ using System.IO;
 
 // проверка нужна на корректность дат
 
-namespace библиотека
+namespace b_библиотека_общая
 {
     public class котировки
     {
