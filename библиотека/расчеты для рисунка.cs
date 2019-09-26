@@ -114,6 +114,8 @@ namespace b_библиотека_форм
         ColorDialog o_colorDialog;
         CheckBox o_сheckBox_приближение;
         CheckBox o_CheckBox_показывать_выходные;
+        ToolTip o_toolTip;
+        
 
         // bool 
         bool vb_режим_приближения=false;
@@ -149,9 +151,17 @@ namespace b_библиотека_форм
            ref CheckBox o_CheckBox_показывать_выходные_,
            ref OpenFileDialog o_файл_диалог_,
            ref PictureBox pictureBox_
+           //ref ToolTip o_toolTip_
 
         )
         {
+            o_pictureBox = pictureBox_;
+
+            o_toolTip = new ToolTip();
+            o_pictureBox.DoubleClick += e_pictureBox_DoubleClick;
+            o_pictureBox.MouseLeave += e_pictureBox_MouseLeave;
+            
+
             o_CheckBox_показывать_выходные = o_CheckBox_показывать_выходные_;
             vb_показывать_выходные = o_CheckBox_показывать_выходные.Checked;
             o_CheckBox_показывать_выходные.CheckedChanged += e_CheckBox_показывать_выходные_CheckedChanged;
@@ -201,14 +211,48 @@ namespace b_библиотека_форм
             o_файл_диалог = o_файл_диалог_;
             o_кнопка_загрузка.Click += e_кнопка_загрузка_клик;
 
-            o_pictureBox = pictureBox_;
+            
             vi_ширина_рисунка = o_pictureBox.Width;          
             vi_высота_рисунка = o_pictureBox.Height;
             o_pictureBox.MouseDown += e_pictureBox_MouseDown;
             o_pictureBox.MouseUp += e_pictureBox_MouseUp;
-           
 
 
+           // e_pictureBox_DoubleClick();// костыль что бы подсказка шла с певого клика 
+        }
+
+
+        private void e_pictureBox_MouseLeave(object sender, EventArgs e)
+        {
+            o_toolTip.Active = false;
+        }
+
+        private void e_pictureBox_DoubleClick(object sender, EventArgs e)// подсказка
+        {
+            int координата_Х = Cursor.Position.X - 4; // 4 - смещение для определения более точного мышки есть расхождение между в определении форма не прилегает к краю на 4 пикселя
+            string time = o_рисунок_1.time_tool_tip(координата_Х);
+            string minimum = o_рисунок_1.minimum_tool_tip(координата_Х);
+            string maximum = o_рисунок_1.maximum_tool_tip(координата_Х);
+            string open = o_рисунок_1.open_tool_tip(координата_Х);
+            string close = o_рисунок_1.close_tool_tip(координата_Х);
+            int смещение = o_котировки_1.смещение(DateTime.Parse(time));
+
+
+            string total_tool_tip =
+                time + "\n" +
+                open + " open" + "\n" +
+                maximum + " максимум" + "\n" +
+                minimum + " минимум" + "\n" +
+                close + " close" + "\n" +
+                смещение + " смещение";
+
+
+            o_toolTip.AutoPopDelay = 90000;
+            o_toolTip.InitialDelay = 50;
+            o_toolTip.ReshowDelay = 50;
+            // o_подсказка.AutomaticDelay = 50;
+            o_toolTip.Active = true;
+            o_toolTip.SetToolTip(o_pictureBox, total_tool_tip);
         }
 
         private void e_CheckBox_показывать_выходные_CheckedChanged(object sender, EventArgs e)
