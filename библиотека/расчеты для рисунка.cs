@@ -128,7 +128,7 @@ namespace b_библиотека_форм
         Point s_точка_старт;
         Point s_точка_финиш;
         List<Quotes> l_Q;
-        ToolTip o_подсказка;
+        //ToolTip o_подсказка;
         
 
         // дата и время
@@ -155,6 +155,7 @@ namespace b_библиотека_форм
 
         )
         {
+            
             o_pictureBox = pictureBox_;
             o_pictureBox.MouseMove += e_pictureBox_MouseMove;
 
@@ -218,10 +219,17 @@ namespace b_библиотека_форм
             o_pictureBox.MouseDown += e_pictureBox_MouseDown;
             o_pictureBox.MouseUp += e_pictureBox_MouseUp;
 
+            o_кнопка_перемотка_вперед.MouseMove += e_кнопка_перемотка_вперед_MouseMove;
+
 
         }
 
-   
+
+
+        private void e_кнопка_перемотка_вперед_MouseMove(object sender, MouseEventArgs e)
+        {
+            o_pictureBox.Image = o_рисунок_1.картинка;
+        }
 
         private void e_pictureBox_MouseMove(object sender, MouseEventArgs e)
         {
@@ -243,8 +251,9 @@ namespace b_библиотека_форм
                     //какие то операторы
                     s_точка_финиш.X = Cursor.Position.X - 8;
                     s_точка_финиш.Y = Cursor.Position.Y - 122;
-                    o_рисунок_1.f_рисование_прямоугольника(s_точка_старт, s_точка_финиш);
-                    o_pictureBox.Image = o_рисунок_1.картинка;
+                    o_рисунок_1.f_рисование_прямоугольника(s_точка_старт, s_точка_финиш);                    
+                    o_pictureBox.Image = o_рисунок_1.картинка_копия;
+                  //  System.Threading.Thread.Sleep(10000);
                 }
 
             }
@@ -257,6 +266,8 @@ namespace b_библиотека_форм
                     int temp = o_рисунок_1.смещение_по_координате(s_точка_финиш.X) - vi_стартовое_смещение;
                     vi_количество_баров = temp;
                     fv_рисуем();
+                    vb_режим_приближения = false;
+                    o_сheckBox_приближение.Checked = false;
                 }
         }
 
@@ -292,6 +303,7 @@ namespace b_библиотека_форм
             // o_подсказка.AutomaticDelay = 50;
             o_toolTip.Active = true;
             o_toolTip.SetToolTip(o_pictureBox, total_tool_tip);
+          
         }
 
         private void e_CheckBox_показывать_выходные_CheckedChanged(object sender, EventArgs e)
