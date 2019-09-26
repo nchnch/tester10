@@ -120,7 +120,7 @@ namespace b_библиотека_форм
         // bool 
         bool vb_режим_приближения=false;
         bool vb_мышь_была_внизу;      
-        bool vb_показывать_выходные;
+        bool vb_показывать_выходные=true;
 
         // объекты , структуры , списки
         b_библиотека_общая.котировки o_котировки_1 = new b_библиотека_общая.котировки();
@@ -156,6 +156,7 @@ namespace b_библиотека_форм
         )
         {
             o_pictureBox = pictureBox_;
+            o_pictureBox.MouseMove += e_pictureBox_MouseMove;
 
             o_toolTip = new ToolTip();
             o_pictureBox.DoubleClick += e_pictureBox_DoubleClick;
@@ -163,7 +164,7 @@ namespace b_библиотека_форм
             
 
             o_CheckBox_показывать_выходные = o_CheckBox_показывать_выходные_;
-            vb_показывать_выходные = o_CheckBox_показывать_выходные.Checked;
+           o_CheckBox_показывать_выходные.Checked=true;
             o_CheckBox_показывать_выходные.CheckedChanged += e_CheckBox_показывать_выходные_CheckedChanged;
 
             o_сheckBox_приближение = o_сheckBox_приближение_;
@@ -218,7 +219,45 @@ namespace b_библиотека_форм
             o_pictureBox.MouseUp += e_pictureBox_MouseUp;
 
 
-           // e_pictureBox_DoubleClick();// костыль что бы подсказка шла с певого клика 
+        }
+
+   
+
+        private void e_pictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (vb_режим_приближения == false)
+                return;
+
+            if (e.Button == MouseButtons.Left)// миссия стартанула
+            {
+                if (s_точка_старт.активна == false)
+                {
+                    // какие то операторы
+                    s_точка_старт.активна = true;
+                    s_точка_старт.X = Cursor.Position.X - 8;
+                    s_точка_старт.Y = Cursor.Position.Y - 122;
+                    return;
+                }
+                else
+                {
+                    //какие то операторы
+                    s_точка_финиш.X = Cursor.Position.X - 8;
+                    s_точка_финиш.Y = Cursor.Position.Y - 122;
+                    o_рисунок_1.f_рисование_прямоугольника(s_точка_старт, s_точка_финиш);
+                    o_pictureBox.Image = o_рисунок_1.картинка;
+                }
+
+            }
+
+            if (e.Button != MouseButtons.Left)// миссия завершена либо не начиналась
+                if (s_точка_старт.активна == true)
+                {
+                    s_точка_старт.активна = false;
+                    vi_стартовое_смещение = o_рисунок_1.смещение_по_координате(s_точка_старт.X);
+                    int temp = o_рисунок_1.смещение_по_координате(s_точка_финиш.X) - vi_стартовое_смещение;
+                    vi_количество_баров = temp;
+                    fv_рисуем();
+                }
         }
 
 
