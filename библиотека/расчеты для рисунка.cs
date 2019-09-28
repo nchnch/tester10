@@ -128,7 +128,6 @@ namespace b_библиотека_форм
         b_библиотека_общая.котировки o_котировки_1 = new b_библиотека_общая.котировки();
         рисунок o_рисунок_1;
         Point s_точка_старт;
-        Point s_точка_финиш;
         List<Quotes> l_Q;
         //ToolTip o_подсказка;
         
@@ -160,7 +159,7 @@ namespace b_библиотека_форм
            ref CheckBox o_CheckBox_показывать_выходные_,
            ref OpenFileDialog o_файл_диалог_,
            ref PictureBox pictureBox_
-           //ref ToolTip o_toolTip_
+
 
         )
         {
@@ -231,7 +230,7 @@ namespace b_библиотека_форм
 
 
             o_rectangle = new Rectangle();
-            o_pictureBox.MouseMove += e_pictureBox_MouseMove;
+            
             o_pictureBox.MouseDown += o_pictureBox_MouseDown;
 
         }
@@ -244,6 +243,7 @@ namespace b_библиотека_форм
             o_rectangle.X = relativePoint.X;
             o_rectangle.Y = relativePoint.Y;
             s_точка_старт.активна = true;
+            o_pictureBox.MouseMove += e_pictureBox_MouseMove;
         }
 
         private void e_pictureBox_MouseMove(object sender, MouseEventArgs e)
@@ -269,8 +269,9 @@ namespace b_библиотека_форм
                 int temp = o_рисунок_1.смещение_по_координате(o_rectangle.X+ o_rectangle.Width) - vi_стартовое_смещение;
                 vi_количество_баров = temp;
                 fv_рисуем();
-               // vb_режим_приближения = false;
-               // o_сheckBox_приближение.Checked = false;
+                o_pictureBox.MouseMove -= e_pictureBox_MouseMove;
+                // vb_режим_приближения = false;
+                // o_сheckBox_приближение.Checked = false;
             }
         }
 
