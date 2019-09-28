@@ -242,13 +242,11 @@ namespace b_библиотека_форм
             var relativePoint = o_pictureBox.PointToClient(Cursor.Position);
             o_rectangle.X = relativePoint.X;
             o_rectangle.Y = relativePoint.Y;
-            s_точка_старт.активна = true;
             o_pictureBox.MouseMove += e_pictureBox_MouseMove;
         }
 
         private void e_pictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-
             if (e.Button == MouseButtons.Left)// миссия стартанула
             {
                 var relativePoint = o_pictureBox.PointToClient(Cursor.Position);
@@ -259,17 +257,11 @@ namespace b_библиотека_форм
                 return;
             }
 
-            if (s_точка_старт.активна == true)
-            {
-                s_точка_старт.активна = false;
-                vi_стартовое_смещение = o_рисунок_1.смещение_по_координате(o_rectangle.X);
-                int temp = o_рисунок_1.смещение_по_координате(o_rectangle.X+ o_rectangle.Width) - vi_стартовое_смещение;
-                vi_количество_баров = temp;
-                fv_рисуем();
-                o_pictureBox.MouseMove -= e_pictureBox_MouseMove;
-                // vb_режим_приближения = false;
-                // o_сheckBox_приближение.Checked = false;
-            }
+            vi_стартовое_смещение = o_рисунок_1.смещение_по_координате(o_rectangle.X);
+            int temp = o_рисунок_1.смещение_по_координате(o_rectangle.X+ o_rectangle.Width) - vi_стартовое_смещение;
+            vi_количество_баров = temp;
+            fv_рисуем();
+            o_pictureBox.MouseMove -= e_pictureBox_MouseMove;
         }
 
 
