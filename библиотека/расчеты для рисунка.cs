@@ -166,7 +166,6 @@ namespace b_библиотека_форм
             o_кисть_для_заливки = new SolidBrush(vc_цвет_заливки);
 
             o_pictureBox = pictureBox_;
-           // o_pictureBox.MouseMove += e_pictureBox_MouseMove;
 
             o_toolTip = new ToolTip();
             o_pictureBox.DoubleClick += e_pictureBox_DoubleClick;
@@ -296,7 +295,6 @@ namespace b_библиотека_форм
             o_toolTip.AutoPopDelay = 90000;
             o_toolTip.InitialDelay = 50;
             o_toolTip.ReshowDelay = 50;
-            // o_подсказка.AutomaticDelay = 50;
             o_toolTip.Active = true;
             o_toolTip.SetToolTip(o_pictureBox, total_tool_tip);
           
