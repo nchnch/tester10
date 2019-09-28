@@ -29,7 +29,6 @@ namespace b_библиотека_форм
         double ширина_бара;
         Font шрифт;
         Brush кисть_текстовая;
-        Brush o_кисть_для_заливки;
         int отступ_баров_от_края;
         Pen p_кисть_для_выделения;
         // котировки
@@ -88,6 +87,7 @@ namespace b_библиотека_форм
             bool показывать_выходные,
             Color цвет_выходных,
             int таймфрейм
+
             
         )
         {
@@ -206,7 +206,7 @@ namespace b_библиотека_форм
 
         }
 
-        public void fv_прямоугольник(Rectangle r)
+        public void fv_прямоугольник(Rectangle r,SolidBrush o_кисть_для_заливки)
         {
             рисовалка.DrawRectangle(o_pen_прямоугольник, r);
             рисовалка.FillRectangle(o_кисть_для_заливки, r);
@@ -222,7 +222,7 @@ namespace b_библиотека_форм
         {
 
             ширина_окна = ширина_окна_;
-            o_pen_прямоугольник = new Pen(Brushes.Blue, 0.8f) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
+            o_pen_прямоугольник = new Pen(Brushes.Green, 0.8f) { DashStyle = DashStyle.Dash };
             высота_окна = высота_окна_;
             картинка = new Bitmap(ширина_окна, высота_окна);          
             рисовалка = Graphics.FromImage(картинка);          
@@ -231,7 +231,6 @@ namespace b_библиотека_форм
             котировки_1 = new b_библиотека_общая.котировки();
             отступ_баров_от_края = 20;// по вертикали
             p_кисть_для_выделения = new Pen(Color.FromArgb(255, 182, 182, 182), 5f);
-            o_кисть_для_заливки = Brushes.Azure;
             котировки = Q_;
             vi_фактор_прореживания = 100; // чем выше тем меньше прореживает
 

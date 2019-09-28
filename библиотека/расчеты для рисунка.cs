@@ -93,6 +93,7 @@ namespace b_библиотека_форм
         Color vc_цвет_фона= Color.Black;
         Color vc_цвет_выходных = Color.FromArgb(160, 55, 55, 55);
         Color vc_цвет_разделителей_периодов = Color.FromArgb(255, 55, 55, 55);
+        Color vc_цвет_заливки = Color.FromArgb(255, 138, 138, 138);
 
         // double
         double vd_сдвиг_при_перемотке=0.2;// при перемотке
@@ -116,7 +117,10 @@ namespace b_библиотека_форм
         CheckBox o_сheckBox_приближение;
         CheckBox o_CheckBox_показывать_выходные;
         ToolTip o_toolTip;
+        SolidBrush o_кисть_для_заливки; 
         
+
+
 
         // bool 
         bool vb_режим_приближения=false;
@@ -163,7 +167,8 @@ namespace b_библиотека_форм
 
         )
         {
-            
+            o_кисть_для_заливки = new SolidBrush(vc_цвет_заливки);
+
             o_pictureBox = pictureBox_;
             o_pictureBox.MouseMove += e_pictureBox_MouseMove;
 
@@ -183,7 +188,7 @@ namespace b_библиотека_форм
             o_colorDialog = o_colorDialog_;
             o_colorDialog.FullOpen = true;
             o_comboBox_цвета = o_comboBox_цвета_;
-            List<string> vs_цвета = new List<string>() {"цвет баров","цвет фона","цвет выходных","цвет разделителей"};// задаем периоды
+            List<string> vs_цвета = new List<string>() {"цвет баров","цвет фона","цвет выходных","цвет разделителей","цвет заливки"};// задаем периоды
             o_comboBox_цвета.DataSource = vs_цвета;
             o_comboBox_цвета.SelectedIndexChanged += e_comboBox_цвета_SelectedIndexChanged;
             o_кнопка_перемотка_вперед = o_кнопка_перемотка_вперед_;
@@ -254,7 +259,7 @@ namespace b_библиотека_форм
                 var relativePoint = o_pictureBox.PointToClient(Cursor.Position);
                 o_rectangle.Width = relativePoint.X - o_rectangle.X;
                 o_rectangle.Height = relativePoint.Y - o_rectangle.Y;
-                o_рисунок_1.fv_прямоугольник(o_rectangle);
+                o_рисунок_1.fv_прямоугольник(o_rectangle, o_кисть_для_заливки);
                 o_pictureBox.Image = o_рисунок_1.картинка;
                 return;
             }
@@ -372,6 +377,8 @@ namespace b_библиотека_форм
                 vc_цвет_выходных = o_colorDialog.Color;
             if (o_comboBox_цвета.SelectedIndex == 3)
                 vc_цвет_разделителей_периодов = o_colorDialog.Color;
+            if (o_comboBox_цвета.SelectedIndex == 4)            
+                 o_кисть_для_заливки.Color = o_colorDialog.Color;
             fv_рисуем();
         }
 
