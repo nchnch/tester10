@@ -241,6 +241,7 @@ namespace b_библиотека_форм
             var relativePoint = o_pictureBox.PointToClient(Cursor.Position);
             o_rectangle.X = relativePoint.X;
             o_rectangle.Y = relativePoint.Y;
+            s_точка_старт.активна = true;
         }
 
         private void e_pictureBox_MouseMove(object sender, MouseEventArgs e)
@@ -250,31 +251,25 @@ namespace b_библиотека_форм
 
             if (e.Button == MouseButtons.Left)// миссия стартанула
             {
-                //o_pictureBox.Image?.Dispose();// очищаем 
-              // Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height);
-             
-                Bitmap bmp = new Bitmap(o_рисунок_1.картинка);
-                Graphics g = Graphics.FromImage(bmp);
                 var relativePoint = o_pictureBox.PointToClient(Cursor.Position);
                 o_rectangle.Width = relativePoint.X - o_rectangle.X;
                 o_rectangle.Height = relativePoint.Y - o_rectangle.Y;
-                g.DrawRectangle(o_pen, o_rectangle);
-                g.FillRectangle(o_кисть, o_rectangle);
-                o_pictureBox.Image = bmp;
-                g.Dispose();
+                o_рисунок_1.fv_прямоугольник(o_rectangle);
+                o_pictureBox.Image = o_рисунок_1.картинка;
+                return;
             }
 
-            if (e.Button != MouseButtons.Left)// миссия завершена либо не начиналась
-                if (s_точка_старт.активна == true)
-                {
-                    s_точка_старт.активна = false;
-                    vi_стартовое_смещение = o_рисунок_1.смещение_по_координате(s_точка_старт.X);
-                    int temp = o_рисунок_1.смещение_по_координате(s_точка_финиш.X) - vi_стартовое_смещение;
-                    vi_количество_баров = temp;
-                    fv_рисуем();
-                    vb_режим_приближения = false;
-                    o_сheckBox_приближение.Checked = false;
-                }
+            //if (e.Button != MouseButtons.Left)// миссия завершена либо не начиналась
+            if (s_точка_старт.активна == true)
+            {
+                s_точка_старт.активна = false;
+                vi_стартовое_смещение = o_рисунок_1.смещение_по_координате(o_rectangle.X);
+                int temp = o_рисунок_1.смещение_по_координате(o_rectangle.X+ o_rectangle.Width) - vi_стартовое_смещение;
+                vi_количество_баров = temp;
+                fv_рисуем();
+               // vb_режим_приближения = false;
+               // o_сheckBox_приближение.Checked = false;
+            }
         }
 
 
