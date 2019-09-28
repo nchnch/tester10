@@ -166,7 +166,7 @@ namespace b_библиотека_форм
             o_кисть_для_заливки = new SolidBrush(vc_цвет_заливки);
 
             o_pictureBox = pictureBox_;
-            o_pictureBox.MouseMove += e_pictureBox_MouseMove;
+           // o_pictureBox.MouseMove += e_pictureBox_MouseMove;
 
             o_toolTip = new ToolTip();
             o_pictureBox.DoubleClick += e_pictureBox_DoubleClick;
@@ -248,8 +248,6 @@ namespace b_библиотека_форм
 
         private void e_pictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            if (vb_режим_приближения == false)
-                return;
 
             if (e.Button == MouseButtons.Left)// миссия стартанула
             {
@@ -261,7 +259,6 @@ namespace b_библиотека_форм
                 return;
             }
 
-            //if (e.Button != MouseButtons.Left)// миссия завершена либо не начиналась
             if (s_точка_старт.активна == true)
             {
                 s_точка_старт.активна = false;
