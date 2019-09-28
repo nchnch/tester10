@@ -139,7 +139,7 @@ namespace b_библиотека_форм
 
         Pen o_pen = new Pen(Brushes.Blue, 0.8f) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };// перо
         Rectangle o_rectangle; // глобальный прямоугольник
-        Bitmap o_картинка_копия;
+        Brush o_кисть = Brushes.Azure;
 
 
 
@@ -250,7 +250,7 @@ namespace b_библиотека_форм
 
             if (e.Button == MouseButtons.Left)// миссия стартанула
             {
-                o_pictureBox.Image?.Dispose();// очищаем 
+                //o_pictureBox.Image?.Dispose();// очищаем 
               // Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height);
              
                 Bitmap bmp = new Bitmap(o_рисунок_1.картинка);
@@ -259,6 +259,7 @@ namespace b_библиотека_форм
                 o_rectangle.Width = relativePoint.X - o_rectangle.X;
                 o_rectangle.Height = relativePoint.Y - o_rectangle.Y;
                 g.DrawRectangle(o_pen, o_rectangle);
+                g.FillRectangle(o_кисть, o_rectangle);
                 o_pictureBox.Image = bmp;
                 g.Dispose();
             }
