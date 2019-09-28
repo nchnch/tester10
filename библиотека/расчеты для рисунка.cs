@@ -285,12 +285,14 @@ namespace b_библиотека_форм
 
         private void e_pictureBox_DoubleClick(object sender, EventArgs e)// подсказка
         {
-            int координата_Х = Cursor.Position.X - 4; // 4 - смещение для определения более точного мышки есть расхождение между в определении форма не прилегает к краю на 4 пикселя
-            string time = o_рисунок_1.time_tool_tip(координата_Х);
-            string minimum = o_рисунок_1.minimum_tool_tip(координата_Х);
-            string maximum = o_рисунок_1.maximum_tool_tip(координата_Х);
-            string open = o_рисунок_1.open_tool_tip(координата_Х);
-            string close = o_рисунок_1.close_tool_tip(координата_Х);
+           // int координата_Х = Cursor.Position.X - 4; // 4 - смещение для определения более точного мышки есть расхождение между в определении форма не прилегает к краю на 4 пикселя
+            var relativePoint = o_pictureBox.PointToClient(Cursor.Position);
+            string time = o_рисунок_1.time_tool_tip(relativePoint.X);
+            string minimum = o_рисунок_1.minimum_tool_tip(relativePoint.X);
+            string maximum = o_рисунок_1.maximum_tool_tip(relativePoint.X);
+            string open = o_рисунок_1.open_tool_tip(relativePoint.X);
+            string close = o_рисунок_1.close_tool_tip(relativePoint.X);
+            string prise = o_рисунок_1.prise_tool_tip(relativePoint.Y);
             int смещение = o_котировки_1.смещение(DateTime.Parse(time));
 
 
@@ -300,7 +302,8 @@ namespace b_библиотека_форм
                 maximum + " максимум" + "\n" +
                 minimum + " минимум" + "\n" +
                 close + " close" + "\n" +
-                смещение + " смещение";
+                смещение + " бар по счету" + "\n" +
+                prise + " цена_в_этом_месте";
 
 
             o_toolTip.AutoPopDelay = 90000;
@@ -384,13 +387,22 @@ namespace b_библиотека_форм
 
         private void e_кнопка_перемотка_вперед_Click(object sender, EventArgs e)
         {
-            vi_стартовое_смещение = Convert.ToInt32(vi_стартовое_смещение + vi_количество_баров * vd_сдвиг_при_перемотке);
+            int temp = Convert.ToInt32(vi_стартовое_смещение + vi_количество_баров * vd_сдвиг_при_перемотке);
+            if (temp == vi_стартовое_смещение)
+                vi_стартовое_смещение++;
+            else
+            vi_стартовое_смещение = temp;
             fv_рисуем();
         }
 
         private void e_кнопка_перемотка_назад_Click(object sender, EventArgs e)
         {
-            vi_стартовое_смещение = Convert.ToInt32(vi_стартовое_смещение - vi_количество_баров * vd_сдвиг_при_перемотке);
+            int temp = Convert.ToInt32(vi_стартовое_смещение - vi_количество_баров * vd_сдвиг_при_перемотке);
+            if (temp == vi_стартовое_смещение)
+                vi_стартовое_смещение--;
+            else
+                vi_стартовое_смещение = temp;
+
             fv_рисуем();
         }
 
