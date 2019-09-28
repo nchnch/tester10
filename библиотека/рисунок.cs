@@ -4,13 +4,16 @@
 //котировки писать по бокам
 // сделать произвольный тайм фрейм
 // нарисовать большую картику а потом ее двигать просто 
+// рисование свечей сделать 
+// ренко 
+// таб пейдж по всю длинну
+
+// нормализация котировок
+// создание синтетики
 
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
