@@ -103,6 +103,7 @@ namespace b_библиотека_форм
         Button o_кнопка_загрузка;
         OpenFileDialog o_файл_диалог;
         PictureBox o_pictureBox;
+        PictureBox o_pictureBox_приближение=new PictureBox();
         ComboBox o_comboBox_периоды;
         TextBox o_textBox_количество_баров;
         DateTimePicker o_dateTimePicker_старт;
@@ -133,7 +134,14 @@ namespace b_библиотека_форм
 
         // дата и время
         DateTime vd_старт;
-       
+
+        // рисование приближения
+
+        Pen o_pen = new Pen(Brushes.Blue, 0.8f) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };// перо
+        Rectangle o_rectangle; // глобальный прямоугольник
+        Bitmap o_картинка_копия;
+
+
 
         public void fv_инизиализация_обектов_формы
         (
@@ -219,16 +227,20 @@ namespace b_библиотека_форм
             o_pictureBox.MouseDown += e_pictureBox_MouseDown;
             o_pictureBox.MouseUp += e_pictureBox_MouseUp;
 
-            o_кнопка_перемотка_вперед.MouseMove += e_кнопка_перемотка_вперед_MouseMove;
 
+            o_rectangle = new Rectangle();
+            o_pictureBox.MouseMove += e_pictureBox_MouseMove;
+            o_pictureBox.MouseDown += o_pictureBox_MouseDown;
 
         }
 
-
-
-        private void e_кнопка_перемотка_вперед_MouseMove(object sender, MouseEventArgs e)
+        private void o_pictureBox_MouseDown(object sender, MouseEventArgs e)
         {
-            o_pictureBox.Image = o_рисунок_1.картинка;
+            if (vb_режим_приближения == false)
+                return;
+            var relativePoint = o_pictureBox.PointToClient(Cursor.Position);
+            o_rectangle.X = relativePoint.X;
+            o_rectangle.Y = relativePoint.Y;
         }
 
         private void e_pictureBox_MouseMove(object sender, MouseEventArgs e)
@@ -238,24 +250,17 @@ namespace b_библиотека_форм
 
             if (e.Button == MouseButtons.Left)// миссия стартанула
             {
-                if (s_точка_старт.активна == false)
-                {
-                    // какие то операторы
-                    s_точка_старт.активна = true;
-                    s_точка_старт.X = Cursor.Position.X - 8;
-                    s_точка_старт.Y = Cursor.Position.Y - 122;
-                    return;
-                }
-                else
-                {
-                    //какие то операторы
-                    s_точка_финиш.X = Cursor.Position.X - 8;
-                    s_точка_финиш.Y = Cursor.Position.Y - 122;
-                    o_рисунок_1.f_рисование_прямоугольника(s_точка_старт, s_точка_финиш);                    
-                    o_pictureBox.Image = o_рисунок_1.картинка_копия;
-                  //  System.Threading.Thread.Sleep(10000);
-                }
-
+                o_pictureBox.Image?.Dispose();// очищаем 
+              // Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height);
+             
+                Bitmap bmp = new Bitmap(o_рисунок_1.картинка);
+                Graphics g = Graphics.FromImage(bmp);
+                var relativePoint = o_pictureBox.PointToClient(Cursor.Position);
+                o_rectangle.Width = relativePoint.X - o_rectangle.X;
+                o_rectangle.Height = relativePoint.Y - o_rectangle.Y;
+                g.DrawRectangle(o_pen, o_rectangle);
+                o_pictureBox.Image = bmp;
+                g.Dispose();
             }
 
             if (e.Button != MouseButtons.Left)// миссия завершена либо не начиналась
@@ -507,6 +512,7 @@ namespace b_библиотека_форм
             );
 
             o_pictureBox.Image = o_рисунок_1.картинка;
+           
         }
 
 
