@@ -49,7 +49,7 @@ namespace b_библиотека_форм
         public string prise_tool_tip(int координата_Y)
         {
            //double i = Convert.ToInt32(Math.Floor((координата_Х / ширина_бара) + смещение_первого_бара));
-            double i = Convert.ToDouble(высота_окна) / k_растяжения_по_вертикали - Convert.ToDouble(координата_Y )/ k_растяжения_по_вертикали + минимум;
+            double i = Convert.ToDouble(высота_окна) / k_растяжения_по_вертикали - Convert.ToDouble(координата_Y+отступ_баров_от_края )/ k_растяжения_по_вертикали + минимум;
           //  точка_один_Y = высота_окна - (int)Math.Ceiling((котировки[i].open - минимум) * k_растяжения_по_вертикали);
 
             return (i.ToString());
