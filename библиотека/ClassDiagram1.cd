@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="b_библиотека_форм.расчеты_для_рисунка" Collapsed="true">
+    <Position X="4.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CASbkREACAsIjFIqBG4Yg0gE4AAAAGFIoABAILIQAAQ=</HashCode>
+      <FileName>расчеты для рисунка.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b_библиотека_форм.рисунок" Collapsed="true">
+    <Position X="6" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>DQABACAAAACAsAIAAQAAAEAAAAAACGIgAArAAUAAABA=</HashCode>
+      <FileName>рисунок.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="b_библиотека_форм.Point" Collapsed="true">
+    <Position X="4.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAA=</HashCode>
+      <FileName>рисунок.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

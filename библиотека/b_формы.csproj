@@ -51,10 +51,13 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\b_библиотека_общая\b_библиотека_общая.csproj">
+    <ProjectReference Include="..\b_библиотека_общая\b_данные.csproj">
       <Project>{dbbed236-9fa3-4538-8f8f-79f2e1f91239}</Project>
-      <Name>b_библиотека_общая</Name>
+      <Name>b_данные</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

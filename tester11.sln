@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "b_библиотека_форм", "библиотека\b_библиотека_форм.csproj", "{88851A8E-93C1-46DB-BF15-CB4CFE9DCA69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "b_формы", "библиотека\b_формы.csproj", "{88851A8E-93C1-46DB-BF15-CB4CFE9DCA69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "b_библиотека_общая", "b_библиотека_общая\b_библиотека_общая.csproj", "{DBBED236-9FA3-4538-8F8F-79F2E1F91239}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "b_данные", "b_библиотека_общая\b_данные.csproj", "{DBBED236-9FA3-4538-8F8F-79F2E1F91239}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "..\tester 13\WindowsFormsApp1\WindowsFormsApp1.csproj", "{30BA37A8-4A82-4C5F-91F3-F63D15F3F5CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "b_сервер", "b_сервер\b_сервер.csproj", "{725F5801-606A-4094-96AA-6AD62C100A07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{30BA37A8-4A82-4C5F-91F3-F63D15F3F5CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30BA37A8-4A82-4C5F-91F3-F63D15F3F5CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30BA37A8-4A82-4C5F-91F3-F63D15F3F5CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{725F5801-606A-4094-96AA-6AD62C100A07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{725F5801-606A-4094-96AA-6AD62C100A07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{725F5801-606A-4094-96AA-6AD62C100A07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{725F5801-606A-4094-96AA-6AD62C100A07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
