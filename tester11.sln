@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "b_формы", "библи�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "b_данные", "b_библиотека_общая\b_данные.csproj", "{DBBED236-9FA3-4538-8F8F-79F2E1F91239}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "..\tester 13\WindowsFormsApp1\WindowsFormsApp1.csproj", "{30BA37A8-4A82-4C5F-91F3-F63D15F3F5CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "start", "..\tester 13\WindowsFormsApp1\start.csproj", "{30BA37A8-4A82-4C5F-91F3-F63D15F3F5CE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "b_сервер", "b_сервер\b_сервер.csproj", "{725F5801-606A-4094-96AA-6AD62C100A07}"
 EndProject

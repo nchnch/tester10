@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace b_формы
 {
-    public partial class Form1 : Form
+    public partial class главная : Form
     {
         b_формы.расчеты_для_рисунка расчеты1 = new b_формы.расчеты_для_рисунка();
 
-        public Form1()
+        public главная()
         {
             InitializeComponent();
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);// для прозрачности

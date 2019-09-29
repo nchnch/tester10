@@ -1,6 +1,6 @@
 ﻿namespace b_формы
 {
-    partial class Form1
+    partial class главная
     {
         /// <summary>
         /// Обязательная переменная конструктора.
