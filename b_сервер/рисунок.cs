@@ -20,7 +20,8 @@ using System.Drawing;
 
 
 
-namespace b_формыb
+
+namespace b_сервер
 {
     public class рисунок
     {

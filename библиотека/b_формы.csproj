@@ -61,6 +61,10 @@
       <Project>{dbbed236-9fa3-4538-8f8f-79f2e1f91239}</Project>
       <Name>b_данные</Name>
     </ProjectReference>
+    <ProjectReference Include="..\b_сервер\b_сервер.csproj">
+      <Project>{725f5801-606a-4094-96aa-6ad62c100a07}</Project>
+      <Name>b_сервер</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
