@@ -7,8 +7,8 @@
     <ProjectGuid>{88851A8E-93C1-46DB-BF15-CB4CFE9DCA69}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>библиотека</RootNamespace>
-    <AssemblyName>библиотека</AssemblyName>
+    <RootNamespace>b_формы</RootNamespace>
+    <AssemblyName>b_формы</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -43,6 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="расчеты для рисунка.cs" />
     <Compile Include="рисунок.cs" />

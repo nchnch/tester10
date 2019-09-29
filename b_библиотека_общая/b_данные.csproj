@@ -7,8 +7,8 @@
     <ProjectGuid>{DBBED236-9FA3-4538-8F8F-79F2E1F91239}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>b_библиотека_общая</RootNamespace>
-    <AssemblyName>b_библиотека_общая</AssemblyName>
+    <RootNamespace>b_данные</RootNamespace>
+    <AssemblyName>b_данные</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
